@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <link href="~/Content/bootstrap_flaty.css" rel="stylesheet" />
+    <link href="~/Content/sidebar.css" rel="stylesheet" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <div class="">
+        <div class="row">
+            <div class="left">
+                <ul>
+                    <a href="#">
+                    <li class="item-menu">
+                        <span class="glyphicon"><i class="bi bi-house-fill"></i></span>
+                        <span class="menu">Menú Principal</span>
+                    </li>
+                    </a>
+                    <a href="#">
+                    <li class="item-menu">
+                        <span class="glyphicon"><i class="bi bi-person-fill-add"></i></span>
+                        <span class="menu">Nueva evaluación</span>
+                    </li>
+                    </a>
+                    <a href="#">
+                    <li class="item-menu">
+                        <span class="glyphicon"><i class="bi bi-person-lines-fill"></i></span>
+                        <span class="menu">Seguimiento de personal</span>
+                    </li>
+                    </a>
+                    <a href="#">
+                    <li class="item-menu">
+                        <span class="glyphicon"><i class="bi bi-file-earmark-text-fill"></i></span>
+                        <span class="menu">Reportes</span>
+                    </li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" runat="server" href="~/">Bio-organicos Saludables</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a runat="server" href="~/"></a></li>
+                    <li><a runat="server" href="~/About"></a></li>
+                    <li><a runat="server" href="~/Contact"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Bio-organicos Saludables</p>
+        </footer>
+    </div>
+</body>
+</html>
