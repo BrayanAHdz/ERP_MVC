@@ -134,19 +134,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>UserRol.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Evaluation.cs">
+      <DependentUpon>UserRol.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Module.cs">
       <DependentUpon>UserRol.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Operation.cs">
       <DependentUpon>UserRol.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Report.cs">
+      <DependentUpon>UserRol.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rol.cs">
       <DependentUpon>UserRol.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol_Operation.cs">
-      <DependentUpon>UserRol.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>UserRol.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -184,8 +190,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\UserRol.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UserRol.Context.cs</LastGenOutput>
       <DependentUpon>UserRol.edmx</DependentUpon>
+      <LastGenOutput>UserRol.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\UserRol.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

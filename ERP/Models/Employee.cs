@@ -12,12 +12,19 @@ namespace ERP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Employee
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int id_employee { get; set; }
+        public int id_evaluation { get; set; }
+        public int id_moudle { get; set; }
+        public string position { get; set; }
+        public string pay { get; set; }
+        public string work_days { get; set; }
+        public int work_hours { get; set; }
+        public int remaining_holidays { get; set; }
+        public int paid_holidays { get; set; }
+    
+        public virtual Evaluation Evaluation { get; set; }
+        public virtual Module Module { get; set; }
     }
 }

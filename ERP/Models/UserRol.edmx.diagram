@@ -4,15 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5226d926e3e24c19bf4a7d0f050fa4cc" Name="Diagram1">
-        <EntityTypeShape EntityType="ERPModel.Module" Width="1.5" PointX="1.5" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPModel.Operation" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPModel.Rol" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPModel.Rol_Operation" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPModel.User" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+      <Diagram DiagramId="73b32a2d9aa04fc3b32d284c9b4c43f9" Name="Diagram1">
+        <EntityTypeShape EntityType="ERPModel.Employee" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Evaluation" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Module" Width="1.5" PointX="1.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Operation" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Report" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Rol" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.Rol_Operation" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPModel.User" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="ERPModel.FK_Employee_Evaluation" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPModel.FK_Employee_Module" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPModel.FK_Evaluation_User" ManuallyRouted="false" />
         <AssociationConnector Association="ERPModel.FK_Operation_Module" ManuallyRouted="false" />
         <AssociationConnector Association="ERPModel.FK_Rol_Operation_Operation" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPModel.FK_Report_User" ManuallyRouted="false" />
         <AssociationConnector Association="ERPModel.FK_Rol_Operation_Rol" ManuallyRouted="false" />
         <AssociationConnector Association="ERPModel.FK_User_Rol" ManuallyRouted="false" />
       </Diagram>

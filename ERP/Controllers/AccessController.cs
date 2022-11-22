@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace ERP.Controllers
 {
     public class AccessController : Controller
     {
+        private string username;
         public ActionResult Login()
         {
             return View();
@@ -18,7 +20,7 @@ namespace ERP.Controllers
         {
             try
             {
-                using (Models.ERPEntities db = new Models.ERPEntities())
+                using (Models.ERPEntities1 db = new Models.ERPEntities1())
                 {
                     var user = (from d in db.User
                                 where d.username == Us.Trim() && d.password == Pass.Trim()
@@ -30,6 +32,7 @@ namespace ERP.Controllers
                     }
 
                     Session["User"] = user;
+                    username = Us;
                 }
                 
                 return RedirectToAction("Index", "Home");
@@ -38,6 +41,11 @@ namespace ERP.Controllers
             {
                 return View();
             }
+        }
+
+        public string getUsername()
+        {
+            return username;
         }
     }
 }

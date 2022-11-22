@@ -13,10 +13,10 @@ namespace ERP.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ERPEntities : DbContext
+    public partial class ERPEntities1 : DbContext
     {
-        public ERPEntities()
-            : base("name=ERPEntities")
+        public ERPEntities1()
+            : base("name=ERPEntities1")
         {
         }
     
@@ -25,11 +25,13 @@ namespace ERP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Evaluation> Evaluation { get; set; }
         public virtual DbSet<Module> Module { get; set; }
         public virtual DbSet<Operation> Operation { get; set; }
+        public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Rol_Operation> Rol_Operation { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

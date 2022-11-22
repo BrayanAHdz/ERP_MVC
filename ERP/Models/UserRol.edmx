@@ -5,6 +5,36 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_evaluation" Type="int" Nullable="false" />
+          <Property Name="id_moudle" Type="int" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pay" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="work_days" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="work_hours" Type="int" Nullable="false" />
+          <Property Name="remaining_holidays" Type="int" Nullable="false" />
+          <Property Name="paid_holidays" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+          </Key>
+          <Property Name="id_evaluation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_us" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="70" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="answers" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="result" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="id_module" />
@@ -19,6 +49,16 @@
           <Property Name="id_operation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="operation" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="id_module" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_us" Type="int" Nullable="false" />
+          <Property Name="type_report" Type="int" Nullable="false" />
+          <Property Name="data" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -35,16 +75,6 @@
           <Property Name="id_rol" Type="int" Nullable="false" />
           <Property Name="id_operation" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id_us" />
@@ -54,6 +84,42 @@
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="id_rol" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Employee_Evaluation">
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluation">
+              <PropertyRef Name="id_evaluation" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_evaluation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_moudle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evaluation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Operation_Module">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
@@ -63,6 +129,18 @@
             </Principal>
             <Dependent Role="Operation">
               <PropertyRef Name="id_module" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="id_us" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -103,15 +181,33 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ERPModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluation" EntityType="Self.Evaluation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Operation" EntityType="Self.Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol_Operation" EntityType="Self.Rol_Operation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Evaluation" Association="Self.FK_Employee_Evaluation">
+            <End Role="Evaluation" EntitySet="Evaluation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Module" Association="Self.FK_Employee_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluation_User" Association="Self.FK_Evaluation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Evaluation" EntitySet="Evaluation" />
+          </AssociationSet>
           <AssociationSet Name="FK_Operation_Module" Association="Self.FK_Operation_Module">
             <End Role="Module" EntitySet="Module" />
             <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
           </AssociationSet>
           <AssociationSet Name="FK_Rol_Operation_Operation" Association="Self.FK_Rol_Operation_Operation">
             <End Role="Operation" EntitySet="Operation" />
@@ -131,12 +227,47 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" />
+          <Property Name="id_moudle" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_days" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_hours" Type="Int32" Nullable="false" />
+          <Property Name="remaining_holidays" Type="Int32" Nullable="false" />
+          <Property Name="paid_holidays" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evaluation" Relationship="Self.FK_Employee_Evaluation" FromRole="Employee" ToRole="Evaluation" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Employee_Module" FromRole="Employee" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+          </Key>
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_us" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="answers" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Evaluation" FromRole="Evaluation" ToRole="Employee" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Evaluation_User" FromRole="Evaluation" ToRole="User" />
+        </EntityType>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="id_module" />
           </Key>
           <Property Name="id_module" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="module1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Module" FromRole="Module" ToRole="Employee" />
           <NavigationProperty Name="Operation" Relationship="Self.FK_Operation_Module" FromRole="Module" ToRole="Operation" />
         </EntityType>
         <EntityType Name="Operation">
@@ -148,6 +279,17 @@
           <Property Name="id_module" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Operation_Module" FromRole="Operation" ToRole="Module" />
           <NavigationProperty Name="Rol_Operation" Relationship="Self.FK_Rol_Operation_Operation" FromRole="Operation" ToRole="Rol_Operation" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_us" Type="Int32" Nullable="false" />
+          <Property Name="type_report" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Report_User" FromRole="Report" ToRole="User" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -168,16 +310,6 @@
           <NavigationProperty Name="Operation" Relationship="Self.FK_Rol_Operation_Operation" FromRole="Rol_Operation" ToRole="Operation" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Rol_Operation_Rol" FromRole="Rol_Operation" ToRole="Rol" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id_us" />
@@ -186,8 +318,46 @@
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_User" FromRole="User" ToRole="Evaluation" />
+          <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_User_Rol" FromRole="User" ToRole="Rol" />
         </EntityType>
+        <Association Name="FK_Employee_Evaluation">
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluation">
+              <PropertyRef Name="id_evaluation" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_evaluation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_moudle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evaluation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Operation_Module">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
@@ -209,6 +379,18 @@
             </Principal>
             <Dependent Role="Rol_Operation">
               <PropertyRef Name="id_operation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="id_us" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -236,13 +418,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ERPEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ERPEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Evaluation" EntityType="Self.Evaluation" />
           <EntitySet Name="Module" EntityType="Self.Module" />
           <EntitySet Name="Operation" EntityType="Self.Operation" />
+          <EntitySet Name="Report" EntityType="Self.Report" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
           <EntitySet Name="Rol_Operation" EntityType="Self.Rol_Operation" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Employee_Evaluation" Association="Self.FK_Employee_Evaluation">
+            <End Role="Evaluation" EntitySet="Evaluation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Module" Association="Self.FK_Employee_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluation_User" Association="Self.FK_Evaluation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Evaluation" EntitySet="Evaluation" />
+          </AssociationSet>
           <AssociationSet Name="FK_Operation_Module" Association="Self.FK_Operation_Module">
             <End Role="Module" EntitySet="Module" />
             <End Role="Operation" EntitySet="Operation" />
@@ -250,6 +446,10 @@
           <AssociationSet Name="FK_Rol_Operation_Operation" Association="Self.FK_Rol_Operation_Operation">
             <End Role="Operation" EntitySet="Operation" />
             <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
           </AssociationSet>
           <AssociationSet Name="FK_Rol_Operation_Rol" Association="Self.FK_Rol_Operation_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -265,7 +465,39 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ERPModelStoreContainer" CdmEntityContainer="ERPEntities">
+        <EntityContainerMapping StorageEntityContainer="ERPModelStoreContainer" CdmEntityContainer="ERPEntities1">
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="ERPModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="id_moudle" ColumnName="id_moudle" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="pay" ColumnName="pay" />
+                <ScalarProperty Name="work_days" ColumnName="work_days" />
+                <ScalarProperty Name="work_hours" ColumnName="work_hours" />
+                <ScalarProperty Name="remaining_holidays" ColumnName="remaining_holidays" />
+                <ScalarProperty Name="paid_holidays" ColumnName="paid_holidays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluation">
+            <EntityTypeMapping TypeName="ERPModel.Evaluation">
+              <MappingFragment StoreEntitySet="Evaluation">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="answers" ColumnName="answers" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Module">
             <EntityTypeMapping TypeName="ERPModel.Module">
               <MappingFragment StoreEntitySet="Module">
@@ -283,6 +515,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Report">
+            <EntityTypeMapping TypeName="ERPModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="id_report" ColumnName="id_report" />
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="type_report" ColumnName="type_report" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Rol">
             <EntityTypeMapping TypeName="ERPModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
@@ -297,17 +540,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_rol" ColumnName="id_rol" />
                 <ScalarProperty Name="id_operation" ColumnName="id_operation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ERPModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
