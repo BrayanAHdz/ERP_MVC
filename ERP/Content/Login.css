@@ -1,14 +1,4 @@
-﻿/*
- * Specific styles of signin component
- */
-/*
- * General styles
- */
-body, html {
-    height: 100%;
-}
-
-.card-container.card {
+﻿.card-container.card {
     max-width: 350px;
     padding: 40px 40px;
 }
