@@ -115,7 +115,14 @@ img {
 }
 
 svg:not(:root) {
-    overflow: hidden;
+    overflow: hidden;input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
 }
 
 figure {
@@ -4198,7 +4205,7 @@ fieldset[disabled] a.btn {
 
 .btn-lg,
 .btn-group-lg > .btn {
-    padding: 18px 27px;
+    padding: 10px 27px;
     font-size: 19px;
     line-height: 1.3333333;
     border-radius: 6px;

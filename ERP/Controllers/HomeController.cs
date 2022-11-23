@@ -27,5 +27,13 @@ namespace ERP.Controllers
 
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult RedirectUrlBtn(string Url)
+        {
+            ViewBag.Sitio = "Hola mundo";
+            return View();
+        }
     }
 }

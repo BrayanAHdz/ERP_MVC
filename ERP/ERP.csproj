@@ -234,6 +234,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Access\Login.cshtml" />
     <Content Include="Views\Shared\_Layout_1.cshtml" />
+    <Content Include="Views\Access\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

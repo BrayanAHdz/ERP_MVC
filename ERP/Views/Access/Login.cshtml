@@ -9,7 +9,6 @@
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
         <form action="~/Access/Login" method="post">
-            <span id="reauth-email" class="reauth-email"></span>
             <div class="alert-danger ">
                 @ViewBag.Error
             </div>
@@ -17,7 +16,7 @@
             <br />
             <input type="password" name="Pass" class="form-control" placeholder="Contraseña"/>
             <br />
-            <input type="submit" class="btn btn-lg btn-block btn-success" value="Ingresar" />
+            <input type="submit" class="btn-lg btn-block btn-success" value="Ingresar" />
         </form>
     </div>
 </div>

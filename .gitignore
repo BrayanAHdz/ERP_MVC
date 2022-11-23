@@ -361,3 +361,18 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ERP/Models/UserRol.tt
+/ERP/Models/UserRol.edmx.diagram
+/ERP/Models/UserRol.edmx
+/ERP/Models/UserRol.Designer.cs
+/ERP/Models/UserRol.cs
+/ERP/Models/UserRol.Context.tt
+/ERP/Models/UserRol.Context.cs
+/ERP/Models/User.cs
+/ERP/Models/Rol_Operation.cs
+/ERP/Models/Rol.cs
+/ERP/Models/Report.cs
+/ERP/Models/Operation.cs
+/ERP/Models/Module.cs
+/ERP/Models/Evaluation.cs
+/ERP/Models/Employee.cs

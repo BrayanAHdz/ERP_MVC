@@ -7,7 +7,7 @@
 <br />
 <div class="container-fluid">
     <br />
-    <h2><strong>Menú Principal</strong></h2>
+    <h2><strong>Menú Principal @ViewBag.Sitio</strong></h2>
     <br />
     <div class="row text-center">
         <div class="col-md-4">
@@ -88,12 +88,14 @@
                     </svg>
                 </div>
                 <br />
-                <div class="card-body">
-                    <h4 class="card-title"><strong>Nuevo usuario</strong></h4>
-                    <p class="card-text">Crear nuevo usario para el sistema</p>
-                </div>
+                    <div class="card-body" onclick="RedirectUrlBtn">
+                        <h4 class="card-title"><strong>Administrar usuarios</strong></h4>
+                        <p class="card-text">Buscar, crear, modificar </p>
+                        <p class="card-text">y borrar información de los usarios para el sistema</p>
+                    </div>
                 <br />
             </div>
         </div>
+        <button onclick="~/Home/RedirectUrlBtn"></button>
     </div>
 </div>
