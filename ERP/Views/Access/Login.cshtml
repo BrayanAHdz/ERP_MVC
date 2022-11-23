@@ -2,19 +2,19 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout_1.cshtml";
 }
-<link href="~/Content/Login.css" rel="stylesheet" />
+<link href="~/Styles/login.css" rel="stylesheet" />
 <br /><br />
 <div class="container">
     <div class="card card-container">
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
-        <form action="~/Access/Login" method="post">
-            <div class="alert-danger ">
+        <form action="~/Access/Login" method="post" autocomplete="off">
+            <div class="msg-err">
                 @ViewBag.Error
             </div>
-            <input type="text" name="Us" class="form-control" placeholder="Usuario"/>
+            <input type="text" name="Us" class="form-control" placeholder="Usuario" required/>
             <br />
-            <input type="password" name="Pass" class="form-control" placeholder="Contraseña"/>
+            <input type="password" name="Pass" class="form-control" placeholder="Contraseña" required/>
             <br />
             <input type="submit" class="btn-done btn-block btn-success" value="Ingresar" />
         </form>

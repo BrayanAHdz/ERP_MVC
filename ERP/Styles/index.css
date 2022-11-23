@@ -44,3 +44,8 @@
     border-radius: 7px;
     margin: 0px auto;
 }
+
+.link {
+    color: black;
+    text-decoration: none;
+}

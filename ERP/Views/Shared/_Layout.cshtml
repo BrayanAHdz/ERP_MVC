@@ -76,6 +76,10 @@
                     <li><a runat="server" href="~/About"></a></li>
                     <li><a runat="server" href="~/Contact"></a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right" ">
+                    <li>Hola @ViewBag.Message!!</li>
+                    <li>@Html.ActionLink("Cerrar sesión", "ColseSession", "Access")</li>
+                </ul>
             </div>
         </div>
     </div>

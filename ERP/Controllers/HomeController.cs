@@ -11,6 +11,7 @@ namespace ERP.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Message = Session["Username"] as string;
             return View();
         }
 
@@ -25,14 +26,6 @@ namespace ERP.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-
-        [HttpPost]
-        public ActionResult RedirectUrlBtn(string Url)
-        {
-            ViewBag.Sitio = "Hola mundo";
             return View();
         }
     }

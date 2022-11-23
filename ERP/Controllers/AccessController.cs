@@ -38,6 +38,7 @@ namespace ERP.Controllers
                     }
 
                     Session["User"] = user;
+                    Session["Username"] = Us;
                 }
                 
                 return RedirectToAction("Index", "Home");
@@ -98,6 +99,21 @@ namespace ERP.Controllers
             stream = sha256.ComputeHash(encoding.GetBytes(str));
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
+        }
+
+        public ActionResult ColseSession()
+        {
+            try
+            {
+                Session["User"] = null;
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = string.Format("Error: {0}", ex);
+                return View();
+            }
         }
     }
 }
