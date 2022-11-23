@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "NewEvaluation";
+}
+
+<link href="~/Styles/login.css" rel="stylesheet" />
+<br />
+<br />
+<div class="container">
+    <div class="card">
+        <form action="~/Access/Login" method="post" autocomplete="off">
+            <div class="msg-err">
+                @ViewBag.Error
+            </div>
+            <input type="text" name="Name" class="form-control" placeholder="Nombre(s)" required />
+            <br />
+            <input type="text" name="Lastname" class="form-control" placeholder="Apellido(s)" required />
+            <br />
+            <input type="number" name="Age" class="form-control" placeholder="Edad" required />
+            <br />
+            <input type="email" name="Email" class="form-control" placeholder="example@example.com" required />
+            <br />
+            <input type="tel" name="Phone" class="form-control" placeholder="Telefono" required />
+            <br />
+            <input type="text" name="Address" class="form-control" placeholder="Dirección" required />
+            <br />
+            <input type="submit" class="btn-done btn-success" value="Siguiente" />
+        </form>
+    </div>
+</div>

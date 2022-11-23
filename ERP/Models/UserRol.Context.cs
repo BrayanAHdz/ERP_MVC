@@ -13,10 +13,10 @@ namespace ERP.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ERPEntities1 : DbContext
+    public partial class ERPEntities : DbContext
     {
-        public ERPEntities1()
-            : base("name=ERPEntities1")
+        public ERPEntities()
+            : base("name=ERPEntities")
         {
         }
     

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Bio-organicos Saludables</title>
     <link href="~/Content/bootstrap_flaty.css" rel="stylesheet" />
-    <link href="~/Content/sidebar.css" rel="stylesheet" />
+    <link href="~/Styles/sidebar.css" rel="stylesheet" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 
@@ -25,7 +25,7 @@
                         <span class="menu">Menú Principal</span>
                     </li>
                     </a>
-                    <a href="#">
+                    <a href="~/Employee/NewEvaluation">
                     <li class="item-menu">
                         <span class="glyphicon"><i class="bi bi-person-fill-add"></i></span>
                         <span class="menu">Nueva evaluación</span>
@@ -50,7 +50,7 @@
                         <span class="menu">Reportes</span>
                     </li>
                     </a>
-                    <a href="~/Access/Register">
+                    <a href="~/Users/Register">
                     <li class="item-menu">
                         <span class="glyphicon"><i class="bi bi-person-fill-add"></i></span>
                         <span class="menu">Nuevo usuario</span>
@@ -77,7 +77,7 @@
                     <li><a runat="server" href="~/Contact"></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ">
-                    <li>Hola @ViewBag.Message!!</li>
+                    <li><a href="">Hola @ViewBag.Message</a></li>
                     <li>@Html.ActionLink("Cerrar sesión", "ColseSession", "Access")</li>
                 </ul>
             </div>
