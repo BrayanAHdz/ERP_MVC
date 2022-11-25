@@ -1,12 +1,4 @@
-﻿.bg-c-green {
-    background: #fff;
-}
-
-.card {
-    color: #000;
-    border-radius: 7px;
-    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+﻿.card {
     border: none;
     margin-bottom: 30px;
     -webkit-transition: all 0.3s ease-in-out;

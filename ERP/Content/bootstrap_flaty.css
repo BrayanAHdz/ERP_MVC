@@ -22,6 +22,12 @@ body {
     margin: 0;
 }
 
+.card {
+    background-color: #fff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
 
 .msg-hi {
     position: relative;
@@ -3755,7 +3761,6 @@ select[multiple].input-lg {
 
 .btn {
     display: inline-block;
-    margin-bottom: 0;
     font-weight: normal;
     text-align: center;
     white-space: nowrap;
@@ -3765,14 +3770,17 @@ select[multiple].input-lg {
     cursor: pointer;
     background-image: none;
     border: 1px solid transparent;
-    padding: 10px 15px;
+    padding: 16px 24px;
     font-size: 15px;
     line-height: 1.42857143;
-    border-radius: 4px;
+    border-radius: 15px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    min-height: 45px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
     .btn:focus,
@@ -3781,8 +3789,8 @@ select[multiple].input-lg {
     .btn.focus,
     .btn:active.focus,
     .btn.active.focus {
-        outline: 5px auto -webkit-focus-ring-color;
-        outline-offset: -2px;
+        outline: none;
+        /*outline-offset: -2px;*/
     }
 
     .btn:hover,
@@ -3790,13 +3798,17 @@ select[multiple].input-lg {
     .btn.focus {
         color: #ffffff;
         text-decoration: none;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        transform: translateY(-2px);
+        box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
     }
 
     .btn:active,
     .btn.active {
         background-image: none;
-        outline: 0;
-        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        outline: none;
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
     }
 
     .btn.disabled,
@@ -3875,21 +3887,18 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
     color: #ffffff;
-    background-color: #2c3e50;
-    border-color: #2c3e50;
+    background-color: #18bc9c;
 }
 
     .btn-primary:focus,
     .btn-primary.focus {
         color: #ffffff;
-        background-color: #1a242f;
-        border-color: #000000;
     }
 
     .btn-primary:hover {
         color: #ffffff;
-        background-color: #1a242f;
-        border-color: #161f29;
+        background-color: #20dab6;
+        border-color: none;
     }
 
     .btn-primary:active,

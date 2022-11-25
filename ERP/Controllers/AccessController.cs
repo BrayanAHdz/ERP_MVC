@@ -34,7 +34,7 @@ namespace ERP.Controllers
                                 select d).FirstOrDefault();
                     if (user == null) 
                     {
-                        ViewBag.Error = "Usuario o contraseña invalidos";
+                        ViewBag.Error = "Usuario o Contraseña Incorrecta";
                         return View();
                     }
 
