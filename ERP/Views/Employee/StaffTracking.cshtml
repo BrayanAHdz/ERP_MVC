@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "StaffTracking";
+}
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#accordion").accordion();
+    });
+</script>
+<br />
+<br />
+<br />
+<br />
+<div id="accordion">
+    <h3>Datos personales</h3>
+    <div class="ss">
+        <div class="row">
+            <div class="col-sm-10">
+                Nombre: xxxxxxxxxxxxxxxx <br />
+                Edad: xx <br />
+                Sexo: xxxx <br />
+                correo: <br />
+            </div>
+            <div class="col-sm-2">
+                <br /> <br />[foto] <br /> <br />
+            </div>
+        </div>
+        <p>
+        </p>
+    </div>
+    <h3>Evaluación psicometrica</h3>
+    <div>
+        <p>
+
+        </p>
+        <img src="https://cdn.bizneo.com/blog/wp-content/uploads/2020/10/Pruebas-psicometricas.png" height="300"/>
+    </div>
+    <h3>Rendimiento laboral</h3>
+    <div>
+        <p>
+
+        </p>
+        <ul>
+            <li>List item one</li>
+            <li>List item two</li>
+            <li>List item three</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .ss{
+        height: auto;
+    }
+</style>

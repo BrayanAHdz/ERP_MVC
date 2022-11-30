@@ -14,6 +14,7 @@ namespace ERP.Controllers
     {
         public ActionResult Register()
         {
+            ViewBag.Message = Session["Username"] as string;
             return View();
         }
 
