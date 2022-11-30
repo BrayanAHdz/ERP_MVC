@@ -27,6 +27,9 @@ body {
     border-radius: 7px;
     -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
     box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    padding: 40px 40px;
 }
 
 .msg-hi {

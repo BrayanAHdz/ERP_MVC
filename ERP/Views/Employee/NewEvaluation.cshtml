@@ -3,29 +3,58 @@
     ViewBag.Title = "NewEvaluation";
 }
 
-<link href="~/Styles/login.css" rel="stylesheet" />
 <br />
 <br />
 <div class="container">
-    <div class="card">
-        <form action="~/Access/Login" method="post" autocomplete="off">
-            <div class="msg-err">
-                @ViewBag.Error
-            </div>
-            <input type="text" name="Name" class="form-control" placeholder="Nombre(s)" required />
-            <br />
-            <input type="text" name="Lastname" class="form-control" placeholder="Apellido(s)" required />
-            <br />
-            <input type="number" name="Age" class="form-control" placeholder="Edad" required />
-            <br />
-            <input type="email" name="Email" class="form-control" placeholder="example@example.com" required />
-            <br />
-            <input type="tel" name="Phone" class="form-control" placeholder="Telefono" required />
-            <br />
-            <input type="text" name="Address" class="form-control" placeholder="Dirección" required />
-            <br />
-            @*<input type="submit" class="btn-done btn-success" value="Siguiente" />*@
-            <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
-        </form>
+    <br />
+    <h2><strong>Nueva evaluación</strong></h2>
+    <br />
+    <div class="row">
+        <div class="card">
+            <form action="~/Access/Login" method="post" autocomplete="off" class="form-horizontal">
+                <div class="msg-err">
+                    @ViewBag.Error
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-sm-2 control-label">Nombre(s):</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="Name" name="Name" class="form-control" placeholder="Nombre(s)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Lastname" class="col-sm-2 control-label">Apellido(s):</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="Lastname" class="form-control" placeholder="Apellido(s)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Age" class="col-sm-2 control-label">Edad:</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="Age" class="form-control" placeholder="Edad" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-10">
+                        <input type="email" name="Email" class="form-control" placeholder="example@example.com" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Phone" class="col-sm-2 control-label">Telefono:</label>
+                    <div class="col-sm-10">
+                        <input type="tel" name="Phone" class="form-control" placeholder="Telefono" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Address" class="col-sm-2 control-label">Dirección:</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="Address" class="form-control" placeholder="Dirección" required />
+                    </div>
+                </div>
+                <div class="col-md-offset-10">
+                    <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
