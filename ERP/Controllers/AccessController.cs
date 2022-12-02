@@ -40,6 +40,7 @@ namespace ERP.Controllers
 
                     Session["User"] = user;
                     Session["Username"] = Us;
+                    Session["IdUser"] = user.id_us.ToString();
                 }
                 
                 return RedirectToAction("Index", "Home");

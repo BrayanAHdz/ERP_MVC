@@ -1,20 +1,4 @@
-﻿.msg-err {
-    background-color: #f57070;
-    color: #f5f5f5;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.msg-succ {
-    padding-left: 15px;
-    background-color: #34c0f0;
-    color: #f5f5f5;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-.ddl-item, .ddl{
+﻿.ddl-item, .ddl{
     padding-left: 15px;
 }
 /*

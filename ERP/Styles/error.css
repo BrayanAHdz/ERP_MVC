@@ -56,17 +56,17 @@
     margin-bottom: 25px;
 }
 
-.notfound a {
-    display: inline-block;
-    padding: 12px 30px;
-    font-weight: 700;
-    background-color: #f99827;
-    color: #fff;
-    border-radius: 40px;
-    text-decoration: none;
-    -webkit-transition: 0.2s all;
-    transition: 0.2s all;
-}
+    .notfound a {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #6fae45;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+        font-size: 19px;
+    }
 
 .notfound a:hover {
     opacity: 0.8;

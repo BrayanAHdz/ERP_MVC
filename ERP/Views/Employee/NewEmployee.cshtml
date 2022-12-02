@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "NewEmployee";
 }
-
 <br />
 <br />
 <div class="container">
@@ -11,21 +10,26 @@
     <br />
     <div class="row">
         <div class="card">
-            <form action="~/Employee/addEmployee" method="post" autocomplete="off" class="form-horizontal">
+            <form action="~/Employee/NewEmployee" method="post" autocomplete="off" class="form-horizontal">
                 <div class="msg-err">
                     @ViewBag.Error
                 </div>
+
+                <div class="msg-succ ">
+                    @ViewBag.Success
+                </div>
+                <br />
                 <div class="form-group">
                     <label for="Name" class="col-sm-2 control-label">Selecionar evaluación:</label>
                     <div class="col-sm-10">
-                        @Html.DropDownList("ddlEvaluacion",Model, new { @class = "from-control"})
-                        
+                        @Html.DropDownList("ddlEvaluacion", Model, new { @class = "form-control" })
+
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="idMoudle" class="col-sm-2 control-label">Area de Trabajo:</label>
                     <div class="col-sm-10">
-                        <select name="idMoudle">
+                        <select name="idMoudle" class="form-control">
                             <option value="1">Recursos Humanos</option>
                             <option value="2">Ventas</option>
                             <option value="3">Calidad</option>
