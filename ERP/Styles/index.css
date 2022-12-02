@@ -17,7 +17,7 @@
 }
 
     .card:hover .card-title {
-        color: #00b368;
+        color: #6fae45;
         -webkit-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
     }
@@ -29,7 +29,7 @@
     }
 
 .card-img-top {
-    background: #e7fffa;
+    background: #f7fff1;
     padding: 15px;
     height: 60px;
     width: 60px;
@@ -40,4 +40,8 @@
 .link {
     color: black;
     text-decoration: none;
+}
+
+svg {
+    fill: #6fae45;
 }
