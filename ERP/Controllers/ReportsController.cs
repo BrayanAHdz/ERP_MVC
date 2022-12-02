@@ -9,7 +9,7 @@ namespace ERP.Controllers
     public class ReportsController : Controller
     {
         // GET: Reports
-        public ActionResult Index()
+        public ActionResult Reports()
         {
             return View();
         }
