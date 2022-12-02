@@ -1,0 +1,67 @@
+﻿@model List<SelectListItem>
+@{
+    ViewBag.Title = "NewEmployee";
+}
+
+<br />
+<br />
+<div class="container">
+    <br />
+    <h2><strong>Nuevo Empleado</strong></h2>
+    <br />
+    <div class="row">
+        <div class="card">
+            <form action="~/Employee/addEmployee" method="post" autocomplete="off" class="form-horizontal">
+                <div class="msg-err">
+                    @ViewBag.Error
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-sm-2 control-label">Selecionar evaluación:</label>
+                    <div class="col-sm-10">
+                        @Html.DropDownList("ddlEvaluacion",Model, new { @class = "from-control"})
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="idMoudle" class="col-sm-2 control-label">Area de Trabajo:</label>
+                    <div class="col-sm-10">
+                        <select name="idMoudle">
+                            <option value="1">Recursos Humanos</option>
+                            <option value="2">Ventas</option>
+                            <option value="3">Calidad</option>
+                            <option value="4">Recoleccion</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="position" class="col-sm-2 control-label">Cargo:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="position" name="position" class="form-control" placeholder="Nombre del Cargo" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pay" class="col-sm-2 control-label">Sueldo:</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="pay" class="form-control" placeholder="Sueldo" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="workDays" class="col-sm-2 control-label">Dias de Trabajo:</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="workDays" class="form-control" placeholder="Dias de trabajo" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="workHours" class="col-sm-2 control-label">Horas de Trabajo:</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="workHours" class="form-control" placeholder="Horas de trabajo " required />
+                    </div>
+                </div>
+
+                <div class="col-md-offset-10">
+                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
