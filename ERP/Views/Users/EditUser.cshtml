@@ -1,0 +1,55 @@
+﻿@model ERP.Models.User
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<link href="~/Styles/login.css" rel="stylesheet" />
+<br />
+<br />
+<div class="container">
+    <div class="card">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form action="~/Users/EditUser" method="post" autocomplete="off">
+            <div class="msg-err ">
+                @ViewBag.Error
+            </div>
+            <div class="msg-succ ">
+                @ViewBag.Success
+            </div>
+            <input type="text" name="Id" value="@Model.id_us" hidden/>
+            <input type="text" name="Us" class="form-control" placeholder="Usuario" value="@Model.username" required />
+            <br />
+            <input type="password" name="Pass" class="form-control" placeholder="Contraseña" required />
+            <br />
+            <select name="Rol_Id" class="form-control">
+                @{
+                    switch (Model.id_rol)
+                    {
+                        case 1:
+                            <option value="1" class="ddl-item" selected>Super administrador</option>
+                            <option value="2" class="ddl-item">Administrador de área</option>
+                            <option value="3" class="ddl-item">Empleado de área</option>
+
+                            break;
+                        case 2:
+                            <option value="1" class="ddl-item">Super administrador</option>
+                            <option value="2" class="ddl-item" selected>Administrador de área</option>
+                            <option value="3" class="ddl-item">Empleado de área</option>
+
+                            break;
+                        case 3:
+                            <option value="1" class="ddl-item">Super administrador</option>
+                            <option value="2" class="ddl-item">Administrador de área</option>
+                            <option value="3" class="ddl-item" selected>Empleado de área</option>
+
+                            break;
+                    }
+                }
+            </select>
+            <br />
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Guarar</button>
+        </form>
+    </div>
+</div>
+

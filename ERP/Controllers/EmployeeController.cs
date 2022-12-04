@@ -5,9 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
 
 namespace ERP.Controllers
 {
@@ -15,34 +20,49 @@ namespace ERP.Controllers
     {
         public ActionResult NewEvaluation()
         {
+            Session["Section"] = "-1";
             ViewBag.Message = Session["Username"] as string;
-            return View();
+            return View(new Evaluation());
         }
 
         [HttpPost]
-        public ActionResult NewEvaluation(string Name, string Lastname, int Age, string Email, string Phone, string Address)
+        public ActionResult NewEvaluation1(string Name, string Lastname, int Age, string Email, string Phone, string Address)
         {
+            Evaluation oEvaluation = new Evaluation();
             try
             {
+                oEvaluation.id_us = int.Parse(Session["IdUser"] as string);
+                oEvaluation.name = Name.ToString();
+                oEvaluation.lastname = Lastname.ToString();
+                oEvaluation.age = Age;
+                oEvaluation.email = Email;
+                oEvaluation.phone = Phone;
+                oEvaluation.address = Address;
+                oEvaluation.answers = ",";
+                oEvaluation.result = "100";
+                oEvaluation.notes = "...";
+
                 using (ERPEntities db = new ERPEntities())
                 {
-                    Evaluation oEvaluation = new Evaluation();
-                    oEvaluation.id_us = int.Parse(Session["IdUser"] as string);
-                    oEvaluation.name = Name.ToString();
-                    oEvaluation.lastname = Lastname.ToString();
-                    oEvaluation.age = Age;
-                    oEvaluation.email= Email;
-                    oEvaluation.phone = Phone;
-                    oEvaluation.address = Address;
-                    oEvaluation.answers = ",";
-                    oEvaluation.result = "100";
-                    oEvaluation.notes = "...";
+                    Evaluation eEvaluation = new Evaluation();
+                    eEvaluation = (from d in db.Evaluation
+                                   where d.email == Email.Trim() || d.phone == Phone.Trim()
+                                   select d).FirstOrDefault();
+                    if (eEvaluation != null)
+                    {
+                        ViewBag.Error = "Correo electronico o el numero de telefono ya registrados";
+                        return View(oEvaluation);
+                    }
+                }
+
+                using (ERPEntities db = new ERPEntities())
+                {
                     db.Evaluation.Add(oEvaluation);
                     db.SaveChanges();
                 }
                 ViewBag.Success = "Empleado  guardado  correctamente";
 
-                return View();
+                return View(new Evaluation());
             }
             catch (DbEntityValidationException e)
             {
@@ -57,21 +77,107 @@ namespace ERP.Controllers
                     }
                 }
 
-                return View();
+                return View(oEvaluation);
             }
         }
+
+        [HttpPost]
+        public ActionResult AddQuestions(string Q1, string Q2, string Q3)
+        {
+            Session["Anwsers"] = (Session["Anwsers"] as string) + Q1 + ',' + Q2 + ',' + Q3 + ',';
+            int section = int.Parse(Session["Section"] as string) + 1;
+            Session["Section"] = section.ToString();
+            if (section < 2) return View("NewEvaluation", new Evaluation() { id_evaluation = -1 });
+            else return View("NewEvaluation", new Evaluation() { id_evaluation = -2 });
+        }
+
+
+        [HttpPost]
+        public ActionResult AddEvaluation(string notes)
+        {
+            Evaluation oEvaluation = Session["Evaluation"] as Evaluation;
+            string answers = Session["Anwsers"] as string;
+            try
+            {
+                using (ERPEntities db = new ERPEntities())
+                {
+                    oEvaluation.answers = answers;
+                    oEvaluation.notes = notes;
+                    db.Evaluation.Add(oEvaluation);
+                    db.SaveChanges();
+                }
+                ViewBag.Success = "Empleado  guardado  correctamente";
+
+                return View("NewEvaluation", new Evaluation());
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    ViewBag.Error = string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        ViewBag.Error = ViewBag.Error + string.Format("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+                return View("NewEvaluation", oEvaluation);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult NewEvaluation(string Name, string Lastname, int Age, string Email, string Phone, string Address)
+        {
+            Evaluation oEvaluation = new Evaluation();
+            oEvaluation.id_us = int.Parse(Session["IdUser"] as string);
+            oEvaluation.name = Name.ToString();
+            oEvaluation.lastname = Lastname.ToString();
+            oEvaluation.age = Age;
+            oEvaluation.email = Email;
+            oEvaluation.phone = Phone;
+            oEvaluation.address = Address;
+            oEvaluation.answers = ",";
+            oEvaluation.result = "100";
+            oEvaluation.notes = "...";
+
+            using (ERPEntities db = new ERPEntities())
+            {
+                Evaluation eEvaluation = new Evaluation();
+                eEvaluation = (from d in db.Evaluation
+                               where d.email == Email.Trim() || d.phone == Phone.Trim()
+                               select d).FirstOrDefault();
+                if (eEvaluation != null)
+                {
+                    ViewBag.Error = "Correo electronico o el numero de telefono ya registrados";
+                    return View(oEvaluation);
+                }
+            }
+
+            Session["Section"] = "0";
+            Session["Evaluation"] = oEvaluation;
+            Session["Anwsers"] = "";
+
+            return View(new Evaluation() { id_evaluation = -1 });
+        }
+
+        
 
         public ActionResult NewEmployee()
         {
             ViewBag.Message = Session["Username"] as string;
             List<SelectListItem> list = new List<SelectListItem>();
-            using (Models.ERPEntities db= new Models.ERPEntities()) {
+            using (Models.ERPEntities db = new Models.ERPEntities())
+            {
                 list = (from d in db.Evaluation
-                        select new SelectListItem() {
+                        select new SelectListItem()
+                        {
                             Value = d.id_evaluation.ToString(),
                             Text = d.lastname.ToString() + " " + d.name.ToString()
-                         }).ToList();
+                        }).ToList();
             }
+
             return View(list);
         }
 

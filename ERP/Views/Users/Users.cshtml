@@ -1,0 +1,80 @@
+﻿@model List<ERP.Models.User>
+@{
+    ViewBag.Title = "Administración de usuarios";
+}
+<br />
+<br />
+<div class="container">
+    <br />
+    <h2><strong>Administración de usuarios</strong></h2>
+    <br />
+    <div class="row">
+        <div class="card">
+            <a href="~/Users/Users">@ViewBag.Volver</a>
+            <div id="msgError" class="msg-err">
+                @ViewBag.Error
+            </div>
+            <div id="msgSucc" class="msg-succ ">
+                @ViewBag.Success
+            </div>
+            <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Content("~/Users/Register")'">Nuevo usuario</button>
+            <form action="~/Users/Users" method="post" autocomplete="off" class="form-horizontal">
+                <br />
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="text" id="Search" name="Search" class="form-control" placeholder="Nombre de usuario" required />
+                    </div>
+                    <div class="col-md-offset-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <br />
+            <div class="container">
+                <table class="table">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Rol de usuario</th>
+                        <th scope="col">Modificar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <th scope="row">@c.id_us</th>
+                            <td>@c.username</td>
+                            @{
+                                string rol = "";
+                                if (c.id_rol == 1) { rol = "Super Adminsitrador"; }
+                                else if (c.id_rol == 2) { rol = "Adminsitrador"; }
+                                else { rol = "Empleado"; }
+                            }
+                            <td>@rol</td>
+                            <td><button class="btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Users/EditUser/"+c.id_us)'">Modificar</button></td>
+                            <td><button class="btn-danger" type="button" onclick="deleteUser(@c.id_us)"><span class="glyphicon"><i class="bi bi-person-fill-add"></i></span></button></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    function deleteUser(id) {
+        url = "@Url.Content("~/Users/DeleteUser/")"+id;
+
+        $.post(url, function (data) {
+            if (data == "1") {
+                document.location.href = "@Url.Content("~/Users/Users")";
+                alert("Hola");
+            } else {
+                document.getElementById("msgError").innerHTML = "ERROR: No se puede eliminar el usuario actual.";
+            }
+        });
+    }
+</script>
+

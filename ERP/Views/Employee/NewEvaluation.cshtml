@@ -1,6 +1,13 @@
-﻿
+﻿@model ERP.Models.Evaluation
 @{
-    ViewBag.Title = "NewEvaluation";
+    ViewBag.Title = "NewEvaluation"; 
+    List<ERP.Models.Question> lst;
+    using (ERP.Models.ERPEntities db = new ERP.Models.ERPEntities())
+    {
+        lst = (from d in db.Question
+               where d.id_evaluation == 0
+               select d).ToList();
+    }
 }
 <br />
 <br />
@@ -10,54 +17,124 @@
     <br />
     <div class="row">
         <div class="card">
-            <form action="~/Employee/NewEvaluation" method="post" autocomplete="off" class="form-horizontal">
-                <div class="msg-err">
-                    @ViewBag.Error
-                </div>
-                <div class="msg-succ ">
-                    @ViewBag.Success
-                </div>
-                <br />
-                <div class="form-group">
-                    <label for="Name" class="col-sm-2 control-label">Nombre(s):</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="Name" name="Name" class="form-control" placeholder="Nombre(s)" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Lastname" class="col-sm-2 control-label">Apellido(s):</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="Lastname" class="form-control" placeholder="Apellido(s)" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Age" class="col-sm-2 control-label">Edad:</label>
-                    <div class="col-sm-10">
-                        <input type="number" name="Age" class="form-control" placeholder="Edad" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Email" class="col-sm-2 control-label">Correo:</label>
-                    <div class="col-sm-10">
-                        <input type="email" name="Email" class="form-control" placeholder="example@example.com" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Phone" class="col-sm-2 control-label">Telefono:</label>
-                    <div class="col-sm-10">
-                        <input type="tel" name="Phone" class="form-control" placeholder="Telefono" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="Address" class="col-sm-2 control-label">Dirección:</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="Address" class="form-control" placeholder="Dirección" required />
-                    </div>
-                </div>
-                <div class="col-md-offset-10">
-                    <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
-                </div>
-            </form>
+            @{
+                if (Model.id_evaluation == -2)
+                {
+                    <h4><strong>Agregar notas</strong></h4>
+                    int section = int.Parse(Session["Section"] as string);
+        <form action="~/Employee/AddEvaluation" method="post" class="form-horizontal">
+            <textarea type="text" name="notes" value="" placeholder="Notas del evaluador"></textarea>
+
+            <div class="col-md-offset-10">
+                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+            </div>
+        </form>
+                }
+                else if (Model.id_evaluation == -1)
+                {
+                    <h4><strong>Prueba de personalidad Big Five</strong></h4>
+                    int section = int.Parse(Session["Section"] as string);
+        <form action="~/Employee/AddQuestions" method="post" class="form-horizontal">
+            <div>
+                <label>@lst[3 * section].question1</label> <br />
+                <input type="radio" name="Q1" value="a" required /> Muy en desacuerdo <br />
+                <input type="radio" name="Q1" value="b" /> Moderadamente en desacuerdo <br />
+                <input type="radio" name="Q1" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
+                <input type="radio" name="Q1" value="d" /> Moderadamente de acuerdo <br />
+                <input type="radio" name="Q1" value="e" /> Muy de acuerdo <br />
+            </div>
+            <br />
+            <div>
+                <label>@lst[3 * section + 1].question1</label> <br />
+                <input type="radio" name="Q2" value="a" required /> Muy en desacuerdo <br />
+                <input type="radio" name="Q2" value="b" /> Moderadamente en desacuerdo <br />
+                <input type="radio" name="Q2" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
+                <input type="radio" name="Q2" value="d" /> Moderadamente de acuerdo <br />
+                <input type="radio" name="Q2" value="e" /> Muy de acuerdo <br />
+            </div>
+            <br />
+            <div>
+                <label>@lst[3 * section + 2].question1</label> <br />
+                <input type="radio" name="Q3" value="a" required /> Muy en desacuerdo <br />
+                <input type="radio" name="Q3" value="b" /> Moderadamente en desacuerdo <br />
+                <input type="radio" name="Q3" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
+                <input type="radio" name="Q3" value="d" /> Moderadamente de acuerdo <br />
+                <input type="radio" name="Q3" value="e" /> Muy de acuerdo <br />
+            </div>
+            <div class="col-md-offset-10">
+                <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
+            </div>
+        </form>
+                }
+                else
+                {
+                    <h4><strong>Datos personales y de contacto</strong></h4>
+                    <form action="~/Employee/NewEvaluation" method="post" autocomplete="off" class="form-horizontal">
+                        <div class="msg-err">
+                            @ViewBag.Error
+                        </div>
+                        <div class="msg-succ ">
+                            @ViewBag.Success
+                        </div>
+                        <br />
+                        <div id="Content">
+                            <div class="form-group">
+                                <label for="Name" class="col-sm-2 control-label">Nombre(s):</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Nombre(s)" value="@Model.name" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Lastname" class="col-sm-2 control-label">Apellido(s):</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="Lastname" class="form-control" placeholder="Apellido(s)" value="@Model.lastname" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Age" class="col-sm-2 control-label">Edad:</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="Age" class="form-control" placeholder="Edad" min="0" value="@Model.age" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email" class="col-sm-2 control-label">Correo:</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="Email" class="form-control" placeholder="example@example.com" value="@Model.email" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone" class="col-sm-2 control-label">Telefono:</label>
+                                <div class="col-sm-10">
+                                    <input type="tel" name="Phone" class="form-control" placeholder="Telefono" pattern="\d{10}$" value="@Model.phone" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Address" class="col-sm-2 control-label">Dirección:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="Address" class="form-control" placeholder="Dirección" value="@Model.address" required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-offset-10">
+                                <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            }
+
         </div>
     </div>
 </div>
+
+<script>
+    var bigFive;
+    var section = -1;
+    function next() {
+        section++;
+            var documentHTML = ""
+                    + "";
+            document.getElementById("Content").innerHTML = documentHTML;
+        alert(section);
+    }
+</script>

@@ -1123,10 +1123,10 @@ works properly when clicked or hovered */
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-    border: 1px solid #09a764;
-    background: #56eaab;
+    border: 1px solid #59a12a;
+    background: #6fae45;
     font-weight: bold;
-    color: #333333;
+    color: #ededed;
 }
 
     .ui-icon-background,
