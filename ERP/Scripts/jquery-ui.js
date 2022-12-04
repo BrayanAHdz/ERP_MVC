@@ -846,8 +846,8 @@
 				}
 				var w1, w2,
 					div = $("<div style=" +
-						"'display:block;position:absolute;width:200px;height:200px;overflow:hidden;'>" +
-						"<div style='height:300px;width:auto;'></div></div>"),
+						"'display:block;position:absolute;width:200px;height:auto;overflow:hidden;'>" +
+						"<div style='height:autopx;width:auto;'></div></div>"),
 					innerDiv = div.children()[0];
 
 				$("body").append(div);
@@ -1984,7 +1984,7 @@
 						value = value.toRgbaString();
 					}
 					try {
-						elem.style[hook] = value;
+						//elem.style[hook] = value;
 					} catch (e) {
 
 						// wrapped to prevent IE from throwing errors on "invalid" values like 'auto' or 'inherit'
@@ -4680,43 +4680,7 @@
 
 			this._setupEvents(options.event);
 
-			if (heightStyle === "fill") {
-				maxHeight = parent.height();
-				this.element.siblings(":visible").each(function () {
-					var elem = $(this),
-						position = elem.css("position");
-
-					if (position === "absolute" || position === "fixed") {
-						return;
-					}
-					maxHeight -= elem.outerHeight(true);
-				});
-
-				this.headers.each(function () {
-					maxHeight -= $(this).outerHeight(true);
-				});
-
-				this.headers.next()
-					.each(function () {
-						$(this).height(Math.max(0, maxHeight -
-							$(this).innerHeight() + $(this).height()));
-					})
-					.css("overflow", "auto");
-			} else if (heightStyle === "auto") {
-				maxHeight = 0;
-				this.headers.next()
-					.each(function () {
-						var isVisible = $(this).is(":visible");
-						if (!isVisible) {
-							$(this).show();
-						}
-						maxHeight = Math.max(maxHeight, $(this).css("height", "").height());
-						if (!isVisible) {
-							$(this).hide();
-						}
-					})
-					.height(maxHeight);
-			}
+			
 		},
 
 		_activate: function (index) {
@@ -17942,9 +17906,9 @@
 				this._setupEvents(value);
 			}
 
-			if (key === "heightStyle") {
+			/*if (key === "heightStyle") {
 				this._setupHeightStyle(value);
-			}
+			}*/
 		},
 
 		_sanitizeSelector: function (hash) {
@@ -18189,7 +18153,7 @@
 		},
 
 		_setupHeightStyle: function (heightStyle) {
-			var maxHeight,
+			/*var maxHeight,
 				parent = this.element.parent();
 
 			if (heightStyle === "fill") {
@@ -18220,7 +18184,7 @@
 				this.panels.each(function () {
 					maxHeight = Math.max(maxHeight, $(this).height("").height());
 				}).height(maxHeight);
-			}
+			}*/
 		},
 
 		_eventHandler: function (event) {
@@ -18411,9 +18375,9 @@
 
 			this.panels.show();
 
-			if (this.options.heightStyle !== "content") {
+			/*if (this.options.heightStyle !== "content") {
 				this.panels.css("height", "");
-			}
+			}*/
 		},
 
 		enable: function (index) {

@@ -8,7 +8,7 @@
 <br />
 <div class="container">
     <div class="card">
-        <img id="profile-img" class="profile-img-card" src="~/Resources/logo_hoja.png" />
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
         <form action="~/Users/EditUser" method="post" autocomplete="off">
             <div class="msg-err ">
@@ -17,7 +17,7 @@
             <div class="msg-succ ">
                 @ViewBag.Success
             </div>
-            <input type="text" name="Id" value="@Model.id_us" hidden />
+            <input type="text" name="Id" value="@Model.id_us" hidden/>
             <input type="text" name="Us" class="form-control" placeholder="Usuario" value="@Model.username" required />
             <br />
             <input type="password" name="Pass" class="form-control" placeholder="Contraseña" required />
@@ -48,8 +48,7 @@
                 }
             </select>
             <br />
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar cambios</button>
-            <a class="btn btn-link btn-lg btn-block btn-cancel" href="~/Users/Users" role="button">Cancelar</a>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Guarar</button>
         </form>
     </div>
 </div>

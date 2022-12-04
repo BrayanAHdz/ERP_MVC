@@ -33,10 +33,12 @@ body {
 
 .card {
     background-color: #fff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
     box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    padding: 20px 25px 30px;
     margin: 0 auto 25px;
-    padding: 40px;
-    border-radius: 15px;
+    padding: 40px 40px;
 }
 
 .msg-hi {
@@ -3796,6 +3798,7 @@ select[multiple].input-lg {
     cursor: pointer;
     background-image: none;
     border: 1px solid transparent;
+    padding: 16px 24px;
     font-size: 15px;
     line-height: 1.42857143;
     border-radius: 15px;
@@ -4208,7 +4211,7 @@ fieldset[disabled] a.btn {
 
 .btn-link {
     font-weight: 400;
-    color: #6fae45;
+    color: #18bc9c;
     border-radius: 0;
 }
 
@@ -4226,16 +4229,13 @@ fieldset[disabled] a.btn {
         .btn-link:focus,
         .btn-link:active {
             border-color: transparent;
-            box-shadow: none;
         }
 
             .btn-link:hover,
-            .btn-link:focus,
-            .btn-link:link {
-                color: #8fcd65;
+            .btn-link:focus {
+                color: #18bc9c;
                 text-decoration: underline;
                 background-color: transparent;
-                text-decoration: none;
             }
 
             .btn-link[disabled]:hover,
@@ -4249,6 +4249,7 @@ fieldset[disabled] a.btn {
 .btn-lg,
 .btn-group-lg > .btn {
     padding: 0px 27px;
+    font-size: 19px;
     line-height: 1.3333333;
     border-radius: 6px;
 }
@@ -8155,7 +8156,7 @@ button.close {
 }
 
 .btn {
-    border-width: 10px;
+    border-width: 2px;
 }
 
     .btn:active {

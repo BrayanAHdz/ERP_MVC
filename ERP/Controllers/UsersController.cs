@@ -19,6 +19,7 @@ namespace ERP.Controllers
             using (ERPEntities db = new ERPEntities())
             {
                 list = (from d in db.User
+                        where d.state == 0
                         select d).ToList();
             }
             return View(list);
@@ -33,7 +34,7 @@ namespace ERP.Controllers
             using (ERPEntities db = new ERPEntities())
             {
                 list = (from d in db.User
-                        where d.username == Search
+                        where d.username.Contains(Search) && d.state == 0
                         select d).ToList();
             }
             return View(list);
@@ -92,7 +93,8 @@ namespace ERP.Controllers
             using (ERPEntities db = new ERPEntities()) 
             {
                 User oUser = db.User.Find(id);
-                db.User.Remove(oUser);
+                oUser.state = 1;
+                db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
 

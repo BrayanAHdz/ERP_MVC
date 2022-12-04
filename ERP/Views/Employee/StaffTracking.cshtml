@@ -1,6 +1,21 @@
-﻿
+﻿@model ERP.Models.vStaffTracking
 @{
     ViewBag.Title = "StaffTracking";
+    string[] results = Model.result.Split('-');
+    string[] modules = results[1].Split(',');
+    string[] modulesResults = results[2].Split('|');
+    string[] moduleA = modulesResults[0].Split(',');
+    string[] moduleB = modulesResults[1].Split(',');
+    string[] moduleC = modulesResults[2].Split(',');
+    string[] moduleD = modulesResults[3].Split(',');
+    string[] moduleE = modulesResults[4].Split(',');
+
+    int progress(string value, int total)
+    {
+        int val = int.Parse(value);
+        int prog = val * 10 / total;
+        return prog;
+    }
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.4.1.js"></script>
@@ -12,47 +27,232 @@
 </script>
 <br />
 <br />
-<br />
-<br />
-<div id="accordion">
-    <h3>Datos personales</h3>
-    <div class="ss">
-        <div class="row">
-            <div class="col-sm-10">
-                Nombre: xxxxxxxxxxxxxxxx <br />
-                Edad: xx <br />
-                Sexo: xxxx <br />
-                correo: <br />
+<div class="container">
+    <br />
+    <h2><strong>Seguimiento del personal</strong></h2>
+    <br />
+    <div id="accordion">
+        <h3>Información personales y de contacto</h3>
+        <div class="ss">
+            <div class="row">
+                <div class="col-sm-10">
+                    <label>
+                        Apellido (s): @Model.lastname <br /><br />
+                        Nombre (s): @Model.name <br /><br />
+                        Edad: @Model.age <br /><br />
+                        correo: @Model.email<br /><br />
+                        Telefono: @Model.phone<br /><br />
+                        Dirección: @Model.address<br /><br />
+                    </label>
+                </div>
+                <div class="col-sm-2">
+                    <br /> <br />[foto] <br /> <br />
+                </div>
             </div>
-            <div class="col-sm-2">
-                <br /> <br />[foto] <br /> <br />
+            <p>
+            </p>
+        </div>
+        <h3>Información laboral</h3>
+        <div>
+            <div class="col-sm-8">
+                <label>
+                    Área de trabajo: @Model.module <br /><br />
+                    Puesto: @Model.position <br /><br />
+                    Sueldo: $@Model.pay <br /><br />
+                    Días de trabajo: @Model.work_days<br /><br />
+                    Horas de trabajo: @Model.work_hours<br /><br />
+                </label>
+            </div>
+            <div class="col-sm-4">
+                <label>
+                    <br /><br /><br /><br /><br /><br />
+                    Días de descanso (pendientes): @Model.remaining_holidays<br /><br />
+                    Días de descanso (pagados): @Model.paid_holidays<br /><br />
+                </label>
             </div>
         </div>
-        <p>
-        </p>
-    </div>
-    <h3>Evaluación psicometrica</h3>
-    <div>
-        <p>
-
-        </p>
-        <img src="https://cdn.bizneo.com/blog/wp-content/uploads/2020/10/Pruebas-psicometricas.png" height="300"/>
-    </div>
-    <h3>Rendimiento laboral</h3>
-    <div>
-        <p>
-
-        </p>
-        <ul>
-            <li>List item one</li>
-            <li>List item two</li>
-            <li>List item three</li>
-        </ul>
+        <h3>Evaluación psicometrica</h3>
+        <div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <div>
+                        <label>Neurosis</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(modules[0],12)%;" aria-valuenow="@progress(modules[0],12)" aria-valuemin="0" aria-valuemax="100">@progress(modules[0], 12)%</div>
+                        </div>
+                        <label>Extroversión</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(modules[1],12)%;" aria-valuenow="@progress(modules[1],12)" aria-valuemin="0" aria-valuemax="100">@progress(modules[1], 12)%</div>
+                        </div>
+                        <label>Apertura a experiencias</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(modules[2],12)%;" aria-valuenow="@progress(modules[2],12)" aria-valuemin="0" aria-valuemax="100">@progress(modules[2], 12)%</div>
+                        </div>
+                        <label>Simpatía</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(modules[3],12)%;" aria-valuenow="@progress(modules[3],12)" aria-valuemin="0" aria-valuemax="100">@progress(modules[3], 12)%</div>
+                        </div>
+                        <label>Meticulosidad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(modules[4],12)%;" aria-valuenow="@progress(modules[4],12)" aria-valuemin="0" aria-valuemax="100">@progress(modules[4], 12)%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <label> Total: @results[0]</label>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Neurosis</label><br /><br />
+                    <div>
+                        <label>Ansiedad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[0],2)%;" aria-valuenow="@progress(moduleA[0],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[0], 2)%</div>
+                        </div>
+                        <label>Ira</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[1],2)%;" aria-valuenow="@progress(moduleA[1],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[1], 2)%</div>
+                        </div>
+                        <label>Depresión</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[2],2)%;" aria-valuenow="@progress(moduleA[2],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[2], 2)%</div>
+                        </div>
+                        <label>Vergüenza</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[3],2)%;" aria-valuenow="@progress(moduleA[3],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[3], 2)%</div>
+                        </div>
+                        <label>Falta de moderacion</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[4],2)%;" aria-valuenow="@progress(moduleA[4],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[4], 2)%</div>
+                        </div>
+                        <label>Vulnerabilidad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleA[5],2)%;" aria-valuenow="@progress(moduleA[5],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleA[5], 2)%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Extroversión</label><br /><br />
+                    <div>
+                        <label>Cordialidad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[0],2)%;" aria-valuenow="@progress(moduleB[0],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[0], 2)%</div>
+                        </div>
+                        <label>Sociabilidad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[1],2)%;" aria-valuenow="@progress(moduleB[1],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[1], 2)%</div>
+                        </div>
+                        <label>Confianza</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[2],2)%;" aria-valuenow="@progress(moduleB[2],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[2], 2)%</div>
+                        </div>
+                        <label>Nivel de actividad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[3],2)%;" aria-valuenow="@progress(moduleB[3],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[3], 2)%</div>
+                        </div>
+                        <label>Búsqueda de nuevas experiencias</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[4],2)%;" aria-valuenow="@progress(moduleB[4],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[4], 2)%</div>
+                        </div>
+                        <label>Alegría</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleB[5],2)%;" aria-valuenow="@progress(moduleB[5],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleB[5], 2)%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Apertura a experiencias</label><br /><br />
+                    <div>
+                        <label>Imaginación</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[0],2)%;" aria-valuenow="@progress(moduleC[0],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[0], 2)%</div>
+                        </div>
+                        <label>Interes artístico</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[1],2)%;" aria-valuenow="@progress(moduleC[1],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[1], 2)%</div>
+                        </div>
+                        <label>Sensibilidad</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[2],2)%;" aria-valuenow="@progress(moduleC[2],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[2], 2)%</div>
+                        </div>
+                        <label>Ansias de aventura</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[3],2)%;" aria-valuenow="@progress(moduleC[3],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[3], 2)%</div>
+                        </div>
+                        <label>Intelecto</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[4],2)%;" aria-valuenow="@progress(moduleC[4],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[4], 2)%</div>
+                        </div>
+                        <label>Liberalismo</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleC[5],2)%;" aria-valuenow="@progress(moduleC[5],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleC[5], 2)%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Simpatía</label><br /><br />
+                    <div>
+                        <label>Confianza</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[0],2)%;" aria-valuenow="@progress(moduleD[0],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[0], 2)%</div>
+                        </div>
+                        <label>Moral</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[1],2)%;" aria-valuenow="@progress(moduleD[1],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[1], 2)%</div>
+                        </div>
+                        <label>Altruismo</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[2],2)%;" aria-valuenow="@progress(moduleD[2],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[2], 2)%</div>
+                        </div>
+                        <label>Cooperación</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[3],2)%;" aria-valuenow="@progress(moduleD[3],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[3], 2)%</div>
+                        </div>
+                        <label>Modestia</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[4],2)%;" aria-valuenow="@progress(moduleD[4],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[4], 2)%</div>
+                        </div>
+                        <label>Empatía</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleD[5],2)%;" aria-valuenow="@progress(moduleD[5],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleD[5], 2)%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Meticulosidad</label><br /><br />
+                    <div>
+                        <label>Autoeficacia</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[0],2)%;" aria-valuenow="@progress(moduleE[0],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[0], 2)%</div>
+                        </div>
+                        <label>Orden</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[1],2)%;" aria-valuenow="@progress(moduleE[1],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[1], 2)%</div>
+                        </div>
+                        <label>Sentido del deber</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[2],2)%;" aria-valuenow="@progress(moduleE[2],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[2], 2)%</div>
+                        </div>
+                        <label>Orientación a objetivos</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[3],2)%;" aria-valuenow="@progress(moduleE[3],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[3], 2)%</div>
+                        </div>
+                        <label>Disciplina</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[4],2)%;" aria-valuenow="@progress(moduleE[4],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[4], 2)%</div>
+                        </div>
+                        <label>Prudencia</label>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: @progress(moduleE[5],2)%;" aria-valuenow="@progress(moduleE[5],2)" aria-valuemin="0" aria-valuemax="100">@progress(moduleE[5], 2)%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<style>
-    .ss{
-        height: auto;
-    }
-</style>

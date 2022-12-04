@@ -22,49 +22,54 @@
                 {
                     <h4><strong>Agregar notas</strong></h4>
                     int section = int.Parse(Session["Section"] as string);
-        <form action="~/Employee/AddEvaluation" method="post" class="form-horizontal">
-            <textarea type="text" name="notes" value="" placeholder="Notas del evaluador"></textarea>
+                    <form action="~/Employee/AddEvaluation" method="post" class="form-horizontal">
+                        <textarea type="text" name="notes" value="" placeholder="Notas del evaluador"></textarea>
 
-            <div class="col-md-offset-10">
-                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
-            </div>
-        </form>
+                        <div class="col-md-offset-10">
+                            <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+                        </div>
+                    </form>
                 }
                 else if (Model.id_evaluation == -1)
                 {
                     <h4><strong>Prueba de personalidad Big Five</strong></h4>
                     int section = int.Parse(Session["Section"] as string);
-        <form action="~/Employee/AddQuestions" method="post" class="form-horizontal">
-            <div>
-                <label>@lst[3 * section].question1</label> <br />
-                <input type="radio" name="Q1" value="a" required /> Muy en desacuerdo <br />
-                <input type="radio" name="Q1" value="b" /> Moderadamente en desacuerdo <br />
-                <input type="radio" name="Q1" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
-                <input type="radio" name="Q1" value="d" /> Moderadamente de acuerdo <br />
-                <input type="radio" name="Q1" value="e" /> Muy de acuerdo <br />
-            </div>
-            <br />
-            <div>
-                <label>@lst[3 * section + 1].question1</label> <br />
-                <input type="radio" name="Q2" value="a" required /> Muy en desacuerdo <br />
-                <input type="radio" name="Q2" value="b" /> Moderadamente en desacuerdo <br />
-                <input type="radio" name="Q2" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
-                <input type="radio" name="Q2" value="d" /> Moderadamente de acuerdo <br />
-                <input type="radio" name="Q2" value="e" /> Muy de acuerdo <br />
-            </div>
-            <br />
-            <div>
-                <label>@lst[3 * section + 2].question1</label> <br />
-                <input type="radio" name="Q3" value="a" required /> Muy en desacuerdo <br />
-                <input type="radio" name="Q3" value="b" /> Moderadamente en desacuerdo <br />
-                <input type="radio" name="Q3" value="c" /> Ni de acuerdo, ni en desacuerdo <br />
-                <input type="radio" name="Q3" value="d" /> Moderadamente de acuerdo <br />
-                <input type="radio" name="Q3" value="e" /> Muy de acuerdo <br />
-            </div>
-            <div class="col-md-offset-10">
-                <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
-            </div>
-        </form>
+                    float progress = 0f;
+                    progress = section / 0.4f;
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: @progress%;" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">@progress%</div>
+                    </div>
+                    <form action="~/Employee/AddQuestions" method="post" class="form-horizontal">
+                        <div>
+                            <label>@lst[3 * section].question1</label> <br />
+                            <input type="radio" id="Q1O1" name="Q1" value="1" required /> <label for="Q1O1">Muy en desacuerdo</label> <br />
+                            <input type="radio" id="Q1O2" name="Q1" value="2" /> <label for="Q1O2">Moderadamente en desacuerdo</label> <br />
+                            <input type="radio" id="Q1O3" name="Q1" value="3" /> <label for="Q1O3">Ni de acuerdo, ni en desacuerdo</label> <br />
+                            <input type="radio" id="Q1O4" name="Q1" value="4" /> <label for="Q1O4">Moderadamente de acuerdo</label> <br />
+                            <input type="radio" id="Q1O5" name="Q1" value="5" /> <label for="Q1O5">Muy de acuerdo</label> <br />
+</div>
+                        <br />
+                        <div>
+                            <label>@lst[3 * section + 1].question1</label> <br />
+                            <input type="radio" id="Q2O1" name="Q2" value="1" required /> <label for="Q2O1">Muy en desacuerdo</label> <br />
+                            <input type="radio" id="Q2O2" name="Q2" value="2" /> <label for="Q2O2">Moderadamente en desacuerdo</label> <br />
+                            <input type="radio" id="Q2O3" name="Q2" value="3" /> <label for="Q2O3">Ni de acuerdo, ni en desacuerdo</label> <br />
+                            <input type="radio" id="Q2O4" name="Q2" value="4" /> <label for="Q2O4">Moderadamente de acuerdo</label> <br />
+                            <input type="radio" id="Q2O5" name="Q2" value="5" /> <label for="Q2O5">Muy de acuerdo</label> <br />
+                        </div>
+                        <br />
+                        <div>
+                            <label>@lst[3 * section + 2].question1</label> <br />
+                            <input type="radio" id="Q3O1" name="Q3" value="1" required /> <label for="Q3O1">Muy en desacuerdo</label> <br />
+                            <input type="radio" id="Q3O2" name="Q3" value="2" /> <label for="Q3O2">Moderadamente en desacuerdo</label> <br />
+                            <input type="radio" id="Q3O3" name="Q3" value="3" /> <label for="Q3O3">Ni de acuerdo, ni en desacuerdo</label> <br />
+                            <input type="radio" id="Q3O4" name="Q3" value="4" /> <label for="Q3O4">Moderadamente de acuerdo</label> <br />
+                            <input type="radio" id="Q3O5" name="Q3" value="5" /> <label for="Q3O5">Muy de acuerdo</label> <br />
+                        </div>
+                        <div class="col-md-offset-10">
+                            <button type="submit" class="btn btn-primary btn-lg">Siguiente</button>
+                        </div>
+                    </form>
                 }
                 else
                 {

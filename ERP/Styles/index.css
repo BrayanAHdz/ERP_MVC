@@ -1,6 +1,5 @@
 ﻿.card {
     border: none;
-    padding: 16px 24px;
     margin-bottom: 30px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
@@ -15,7 +14,6 @@
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     transform: scale(1.1);
-    text-decoration: none;
 }
 
     .card:hover .card-title {
@@ -39,7 +37,7 @@
     margin: 0px auto;
 }
 
-a:link {
+.link {
     color: black;
     text-decoration: none;
 }

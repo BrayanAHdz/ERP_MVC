@@ -1,24 +1,26 @@
-﻿@model List<ERP.Models.User>
+﻿@model List<ERP.Models.vEvaluation>
 @{
-    ViewBag.Title = "Administración de usuarios";
+    ViewBag.Title = "Evaluations";
+    int resultado = 0;
+    string[] resultados;
 }
 <br />
 <br />
 <div class="container">
     <br />
-    <h2><strong>Administración de usuarios</strong></h2>
+    <h2><strong>Nuevo Empleado</strong></h2>
     <br />
     <div class="row">
         <div class="card">
-            <a href="~/Users/Users">@ViewBag.Volver</a>
             <div id="msgError" class="msg-err">
                 @ViewBag.Error
             </div>
             <div id="msgSucc" class="msg-succ ">
                 @ViewBag.Success
             </div>
-            <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Content("~/Users/Register")'">Nuevo usuario</button>
-            <form action="~/Users/Users" method="post" autocomplete="off" class="form-horizontal">
+            <h4><strong>Seleccionar aspirante</strong></h4>
+            <a href="~/Employee/Evaluations">@ViewBag.Volver</a>
+            <form action="~/Employee/Evaluations" method="post" autocomplete="off" class="form-horizontal">
                 <br />
                 <div class="form-group row">
                     <div class="col-sm-10">
@@ -34,25 +36,25 @@
                 <table class="table">
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Apellido</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Rol de usuario</th>
-                        <th scope="col">Modificar</th>
-                        <th scope="col">Eliminar</th>
+                        <th scope="col">Resultado general</th>
+                        <th scope="col">Notas</th>
+                        <th scope="col">Evaluador</th>
+                        <th scope="col">Contratar</th>
                     </tr>
                     @foreach (var c in Model)
                     {
+                        resultados = c.result.Split('-');
+                        resultado = int.Parse(resultados[0]);
                         <tr>
-                            <th scope="row">@c.id_us</th>
+                            <th scope="row">@c.id_evaluation</th>
+                            <td>@c.lastname</td>
+                            <td>@c.name</td>
+                            <td>@resultado</td>
+                            <td>@c.notes</td>
                             <td>@c.username</td>
-                            @{
-                                string rol = "";
-                                if (c.id_rol == 1) { rol = "Super Adminsitrador"; }
-                                else if (c.id_rol == 2) { rol = "Adminsitrador"; }
-                                else { rol = "Empleado"; }
-                            }
-                            <td>@rol</td>
-                            <td><button class="btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Users/EditUser/"+c.id_us)'">Modificar</button></td>
-                            <td><button class="btn-danger" type="button" onclick="deleteUser(@c.id_us)"><span class="glyphicon"><i class="bi bi-person-fill-add"></i></span></button></td>
+                            <td><button class="btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Employee/NewEmployee/"+c.id_evaluation)'">Contratar</button></td>
                         </tr>
                     }
                 </table>
@@ -77,4 +79,3 @@
         });
     }
 </script>
-
