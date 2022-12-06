@@ -25,6 +25,8 @@ namespace ERP.Models
         public string username { get; set; }
         public string password { get; set; }
         public int id_rol { get; set; }
+        public Nullable<int> id_employee { get; set; }
+        public int state { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Evaluation> Evaluation { get; set; }

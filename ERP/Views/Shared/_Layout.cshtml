@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using ERP.Models
+@{
+    User oUser = Session["User"] as User;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,42 +24,50 @@
                     <br />
                     <br />
                     <a href="~/">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-house-fill"></i></span>
-                        <span class="menu">Menú Principal</span>
-                    </li>
+                        <li class="item-menu">
+                            <span class="glyphicon"><i class="bi bi-house-fill"></i></span>
+                            <span class="menu">Menú Principal</span>
+                        </li>
                     </a>
                     <a href="~/Employee/NewEvaluation">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-file-earmark-plus-fill"></i></span>
-                        <span class="menu">Nueva evaluación</span>
-                    </li>
+                        <li class="item-menu">
+                            <span class="glyphicon"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                            <span class="menu">Nueva evaluación</span>
+                        </li>
                     </a>
                     <a href="~/Employee/Evaluations">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-person-fill-add"></i></span>
-                        <span class="menu">Nuevo empleado</span>
-                    </li>
+                        <li class="item-menu">
+                            <span class="glyphicon"><i class="bi bi-person-fill-add"></i></span>
+                            <span class="menu">Nuevo empleado</span>
+                        </li>
                     </a>
                     <a href="~/Employee/Employee">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-person-lines-fill"></i></span>
-                        <span class="menu">Seguimiento del personal</span>
-                    </li>
+                        <li class="item-menu">
+                            <span class="glyphicon"><i class="bi bi-person-lines-fill"></i></span>
+                            <span class="menu">Seguimiento del personal</span>
+                        </li>
                     </a>
-                    </a>
-                    <a href="~/Reports/Reports">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-file-earmark-text-fill"></i></span>
-                        <span class="menu">Reportes</span>
-                    </li>
-                    </a>
-                    <a href="~/Users/Users">
-                    <li class="item-menu">
-                        <span class="glyphicon"><i class="bi bi-person-fill-gear"></i></span>
-                        <span class="menu">Administrar usuarios</span>
-                    </li>
-                    </a>
+                    @{
+                        if (oUser.id_rol < 3)
+                        {
+                            <a href="~/Reports/Reports">
+                                <li class="item-menu">
+                                    <span class="glyphicon"><i class="bi bi-file-earmark-text-fill"></i></span>
+                                    <span class="menu">Reportes</span>
+                                </li>
+                            </a>
+
+                            if (oUser.id_rol == 1)
+                            {
+                            <a href="~/Users/Users">
+                                <li class="item-menu">
+                                    <span class="glyphicon"><i class="bi bi-person-fill-gear"></i></span>
+                                    <span class="menu">Administrar usuarios</span>
+                                </li>
+                            </a>
+                            }
+                        }
+                     }
                 </ul>
             </div>
         </div>

@@ -12,29 +12,22 @@ namespace ERP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Evaluation
+    public partial class vStaffTracking
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Evaluation()
-        {
-            this.Employee = new HashSet<Employee>();
-        }
-    
-        public int id_evaluation { get; set; }
-        public int id_us { get; set; }
-        public string name { get; set; }
+        public int id_employee { get; set; }
         public string lastname { get; set; }
+        public string name { get; set; }
         public int age { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
         public string address { get; set; }
-        public string answers { get; set; }
+        public string module { get; set; }
+        public string position { get; set; }
+        public string pay { get; set; }
         public string result { get; set; }
-        public string notes { get; set; }
-        public int state { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
-        public virtual User User { get; set; }
+        public string work_days { get; set; }
+        public int work_hours { get; set; }
+        public int remaining_holidays { get; set; }
+        public int paid_holidays { get; set; }
     }
 }

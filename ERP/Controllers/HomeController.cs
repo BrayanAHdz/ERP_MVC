@@ -11,6 +11,7 @@ namespace ERP.Controllers
     {
         public ActionResult Index()
         {
+            if ((Session["User"] as User) == null) return View("Login","Access");
             ViewBag.Message = Session["Username"] as string;
             return View();
         }
