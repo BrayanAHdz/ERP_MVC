@@ -51,8 +51,8 @@
                                 else { rol = "Empleado"; }
                             }
                             <td>@rol</td>
-                            <td><button class="btn btn-primary btn-lg" type="button" onclick="document.location.href='@Url.Content("~/Users/EditUser/"+c.id_us)'"><i class="bi bi-pencil-fill"></i></button></td>
-                            <td><button class="btn btn-danger btn-lg" type="button" onclick="deleteUser(@c.id_us)"><i class="bi bi-trash-fill"></i></button></td>
+                            <td><button class="btn btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Users/EditUser/"+c.id_us)'"><i class="bi bi-pencil-fill"></i></button></td>
+                            <td><button class="btn btn-danger" type="button" onclick="deleteUser(@c.id_us)"><i class="bi bi-trash-fill"></i></button></td>
                         </tr>
                     }
                 </table>
