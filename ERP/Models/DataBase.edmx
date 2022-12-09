@@ -1,0 +1,975 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_evaluation" Type="int" Nullable="false" />
+          <Property Name="id_moudle" Type="int" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pay" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="work_days" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="work_hours" Type="int" Nullable="false" />
+          <Property Name="remaining_holidays" Type="int" Nullable="false" />
+          <Property Name="paid_holidays" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+          </Key>
+          <Property Name="id_evaluation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_us" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="70" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="answers" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="result" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="150" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="id_module" />
+          </Key>
+          <Property Name="id_module" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="module" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="id_operation" />
+          </Key>
+          <Property Name="id_operation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="operation" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_module" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ERP.dbo.Question' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+            <PropertyRef Name="question" />
+          </Key>
+          <Property Name="id_evaluation" Type="int" Nullable="false" />
+          <Property Name="question" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_us" Type="int" Nullable="false" />
+          <Property Name="type_report" Type="int" Nullable="false" />
+          <Property Name="data" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol_Operation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="id_operation" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_us" />
+          </Key>
+          <Property Name="id_us" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_employee" Type="int" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ERP.dbo.vEmployee' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vEmployee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="module" />
+            <PropertyRef Name="position" />
+            <PropertyRef Name="pay" />
+            <PropertyRef Name="work_days" />
+            <PropertyRef Name="work_hours" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="module" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pay" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="work_days" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="work_hours" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ERP.dbo.vEvaluation' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vEvaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="lastname" />
+            <PropertyRef Name="result" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="id_evaluation" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="result" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="150" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'ERP.dbo.vStaffTracking' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vStaffTracking">
+          <Key>
+            <PropertyRef Name="id_employee" />
+            <PropertyRef Name="lastname" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="module" />
+            <PropertyRef Name="position" />
+            <PropertyRef Name="pay" />
+            <PropertyRef Name="result" />
+            <PropertyRef Name="work_days" />
+            <PropertyRef Name="work_hours" />
+            <PropertyRef Name="remaining_holidays" />
+            <PropertyRef Name="paid_holidays" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="70" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="module" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pay" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="result" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="work_days" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="work_hours" Type="int" Nullable="false" />
+          <Property Name="remaining_holidays" Type="int" Nullable="false" />
+          <Property Name="paid_holidays" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_Evaluation">
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluation">
+              <PropertyRef Name="id_evaluation" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_evaluation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_moudle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evaluation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operation_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="id_module" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Operation">
+          <End Role="Operation" Type="Self.Operation" Multiplicity="1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="id_operation" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="id_operation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AllEvaluationList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="varchar" Mode="In" />
+          <Parameter Name="fisrt" Type="int" Mode="In" />
+          <Parameter Name="last" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EmployeeList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="varchar" Mode="In" />
+          <Parameter Name="fisrt" Type="int" Mode="In" />
+          <Parameter Name="last" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EvaluationList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="varchar" Mode="In" />
+          <Parameter Name="fisrt" Type="int" Mode="In" />
+          <Parameter Name="last" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UserList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="varchar" Mode="In" />
+          <Parameter Name="fisrt" Type="int" Mode="In" />
+          <Parameter Name="last" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ERPModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluation" EntityType="Self.Evaluation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol_Operation" EntityType="Self.Rol_Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Question].[id_evaluation] AS [id_evaluation], 
+    [Question].[question] AS [question]
+    FROM [dbo].[Question] AS [Question]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEmployee" EntityType="Self.vEmployee" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEmployee].[id_employee] AS [id_employee], 
+    [vEmployee].[fullname] AS [fullname], 
+    [vEmployee].[module] AS [module], 
+    [vEmployee].[position] AS [position], 
+    [vEmployee].[pay] AS [pay], 
+    [vEmployee].[work_days] AS [work_days], 
+    [vEmployee].[work_hours] AS [work_hours]
+    FROM [dbo].[vEmployee] AS [vEmployee]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEvaluation" EntityType="Self.vEvaluation" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEvaluation].[id_evaluation] AS [id_evaluation], 
+    [vEvaluation].[name] AS [name], 
+    [vEvaluation].[lastname] AS [lastname], 
+    [vEvaluation].[result] AS [result], 
+    [vEvaluation].[notes] AS [notes], 
+    [vEvaluation].[username] AS [username], 
+    [vEvaluation].[state] AS [state]
+    FROM [dbo].[vEvaluation] AS [vEvaluation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vStaffTracking" EntityType="Self.vStaffTracking" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vStaffTracking].[id_employee] AS [id_employee], 
+    [vStaffTracking].[lastname] AS [lastname], 
+    [vStaffTracking].[name] AS [name], 
+    [vStaffTracking].[age] AS [age], 
+    [vStaffTracking].[email] AS [email], 
+    [vStaffTracking].[phone] AS [phone], 
+    [vStaffTracking].[address] AS [address], 
+    [vStaffTracking].[module] AS [module], 
+    [vStaffTracking].[position] AS [position], 
+    [vStaffTracking].[pay] AS [pay], 
+    [vStaffTracking].[result] AS [result], 
+    [vStaffTracking].[work_days] AS [work_days], 
+    [vStaffTracking].[work_hours] AS [work_hours], 
+    [vStaffTracking].[remaining_holidays] AS [remaining_holidays], 
+    [vStaffTracking].[paid_holidays] AS [paid_holidays]
+    FROM [dbo].[vStaffTracking] AS [vStaffTracking]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Employee_Evaluation" Association="Self.FK_Employee_Evaluation">
+            <End Role="Evaluation" EntitySet="Evaluation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Module" Association="Self.FK_Employee_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluation_User" Association="Self.FK_Evaluation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Evaluation" EntitySet="Evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operation_Module" Association="Self.FK_Operation_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Operation" Association="Self.FK_Rol_Operation_Operation">
+            <End Role="Operation" EntitySet="Operation" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Rol" Association="Self.FK_Rol_Operation_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Rol" Association="Self.FK_User_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ERPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" />
+          <Property Name="id_moudle" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_days" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_hours" Type="Int32" Nullable="false" />
+          <Property Name="remaining_holidays" Type="Int32" Nullable="false" />
+          <Property Name="paid_holidays" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evaluation" Relationship="Self.FK_Employee_Evaluation" FromRole="Employee" ToRole="Evaluation" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Employee_Module" FromRole="Employee" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+          </Key>
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_us" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="answers" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="result" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Evaluation" FromRole="Evaluation" ToRole="Employee" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Evaluation_User" FromRole="Evaluation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="id_module" />
+          </Key>
+          <Property Name="id_module" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="module1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Module" FromRole="Module" ToRole="Employee" />
+          <NavigationProperty Name="Operation" Relationship="Self.FK_Operation_Module" FromRole="Module" ToRole="Operation" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="id_operation" />
+          </Key>
+          <Property Name="id_operation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="operation1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_module" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Operation_Module" FromRole="Operation" ToRole="Module" />
+          <NavigationProperty Name="Rol_Operation" Relationship="Self.FK_Rol_Operation_Operation" FromRole="Operation" ToRole="Rol_Operation" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_us" Type="Int32" Nullable="false" />
+          <Property Name="type_report" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Report_User" FromRole="Report" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rol_Operation" Relationship="Self.FK_Rol_Operation_Rol" FromRole="Rol" ToRole="Rol_Operation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Rol" FromRole="Rol" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rol_Operation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="id_operation" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Operation" Relationship="Self.FK_Rol_Operation_Operation" FromRole="Rol_Operation" ToRole="Operation" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Rol_Operation_Rol" FromRole="Rol_Operation" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_us" />
+          </Key>
+          <Property Name="id_us" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_employee" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_User" FromRole="User" ToRole="Evaluation" />
+          <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_User_Rol" FromRole="User" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+            <PropertyRef Name="question1" />
+          </Key>
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" />
+          <Property Name="question1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vEmployee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+            <PropertyRef Name="fullname" />
+            <PropertyRef Name="module" />
+            <PropertyRef Name="position" />
+            <PropertyRef Name="pay" />
+            <PropertyRef Name="work_days" />
+            <PropertyRef Name="work_hours" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_days" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_hours" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vEvaluation">
+          <Key>
+            <PropertyRef Name="id_evaluation" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="lastname" />
+            <PropertyRef Name="result" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="id_evaluation" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="result" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vStaffTracking">
+          <Key>
+            <PropertyRef Name="id_employee" />
+            <PropertyRef Name="lastname" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="module" />
+            <PropertyRef Name="position" />
+            <PropertyRef Name="pay" />
+            <PropertyRef Name="result" />
+            <PropertyRef Name="work_days" />
+            <PropertyRef Name="work_hours" />
+            <PropertyRef Name="remaining_holidays" />
+            <PropertyRef Name="paid_holidays" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="result" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_days" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="work_hours" Type="Int32" Nullable="false" />
+          <Property Name="remaining_holidays" Type="Int32" Nullable="false" />
+          <Property Name="paid_holidays" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_Evaluation">
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluation">
+              <PropertyRef Name="id_evaluation" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_evaluation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_moudle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evaluation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operation_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Operation" Type="Self.Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="id_module" />
+            </Principal>
+            <Dependent Role="Operation">
+              <PropertyRef Name="id_module" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Operation">
+          <End Role="Operation" Type="Self.Operation" Multiplicity="1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="id_operation" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="id_operation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_us" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="id_us" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Operation_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Rol_Operation" Type="Self.Rol_Operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="Rol_Operation">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ERPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Evaluation" EntityType="Self.Evaluation" />
+          <EntitySet Name="Module" EntityType="Self.Module" />
+          <EntitySet Name="Operation" EntityType="Self.Operation" />
+          <EntitySet Name="Report" EntityType="Self.Report" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="Rol_Operation" EntityType="Self.Rol_Operation" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Question" EntityType="Self.Question" />
+          <EntitySet Name="vEmployee" EntityType="Self.vEmployee" />
+          <EntitySet Name="vEvaluation" EntityType="Self.vEvaluation" />
+          <EntitySet Name="vStaffTracking" EntityType="Self.vStaffTracking" />
+          <AssociationSet Name="FK_Employee_Evaluation" Association="Self.FK_Employee_Evaluation">
+            <End Role="Evaluation" EntitySet="Evaluation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Module" Association="Self.FK_Employee_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluation_User" Association="Self.FK_Evaluation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Evaluation" EntitySet="Evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operation_Module" Association="Self.FK_Operation_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Operation" EntitySet="Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Operation" Association="Self.FK_Rol_Operation_Operation">
+            <End Role="Operation" EntitySet="Operation" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Operation_Rol" Association="Self.FK_Rol_Operation_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Operation" EntitySet="Rol_Operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Rol" Association="Self.FK_User_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <FunctionImport Name="EmployeeList" ReturnType="Collection(ERPModel.EmployeeList_Result)">
+            <Parameter Name="search" Mode="In" Type="String" />
+            <Parameter Name="fisrt" Mode="In" Type="Int32" />
+            <Parameter Name="last" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EvaluationList" ReturnType="Collection(ERPModel.EvaluationList_Result)">
+            <Parameter Name="search" Mode="In" Type="String" />
+            <Parameter Name="fisrt" Mode="In" Type="Int32" />
+            <Parameter Name="last" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UserList" ReturnType="Collection(ERPModel.UserList_Result)">
+            <Parameter Name="search" Mode="In" Type="String" />
+            <Parameter Name="fisrt" Mode="In" Type="Int32" />
+            <Parameter Name="last" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AllEvaluationList" ReturnType="Collection(ERPModel.AllEvaluationList_Result)">
+            <Parameter Name="search" Mode="In" Type="String" />
+            <Parameter Name="fisrt" Mode="In" Type="Int32" />
+            <Parameter Name="last" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="EmployeeList_Result">
+          <Property Type="Int32" Name="id_employee" Nullable="false" />
+          <Property Type="String" Name="fullname" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="module" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="position" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="pay" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="work_days" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="work_hours" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EvaluationList_Result">
+          <Property Type="Int32" Name="id_evaluation" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="lastname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="result" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="notes" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="state" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UserList_Result">
+          <Property Type="Int32" Name="id_us" Nullable="false" />
+          <Property Type="Int32" Name="id_employee" Nullable="true" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="id_rol" Nullable="false" />
+          <Property Type="Int32" Name="state" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="AllEvaluationList_Result">
+          <Property Type="Int32" Name="id_evaluation" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="lastname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="result" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="notes" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="state" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ERPModelStoreContainer" CdmEntityContainer="ERPEntities">
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="ERPModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="id_moudle" ColumnName="id_moudle" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="pay" ColumnName="pay" />
+                <ScalarProperty Name="work_days" ColumnName="work_days" />
+                <ScalarProperty Name="work_hours" ColumnName="work_hours" />
+                <ScalarProperty Name="remaining_holidays" ColumnName="remaining_holidays" />
+                <ScalarProperty Name="paid_holidays" ColumnName="paid_holidays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluation">
+            <EntityTypeMapping TypeName="ERPModel.Evaluation">
+              <MappingFragment StoreEntitySet="Evaluation">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="answers" ColumnName="answers" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module">
+            <EntityTypeMapping TypeName="ERPModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="id_module" ColumnName="id_module" />
+                <ScalarProperty Name="module1" ColumnName="module" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operation">
+            <EntityTypeMapping TypeName="ERPModel.Operation">
+              <MappingFragment StoreEntitySet="Operation">
+                <ScalarProperty Name="id_operation" ColumnName="id_operation" />
+                <ScalarProperty Name="operation1" ColumnName="operation" />
+                <ScalarProperty Name="id_module" ColumnName="id_module" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report">
+            <EntityTypeMapping TypeName="ERPModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="id_report" ColumnName="id_report" />
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="type_report" ColumnName="type_report" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="ERPModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="rol1" ColumnName="rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol_Operation">
+            <EntityTypeMapping TypeName="ERPModel.Rol_Operation">
+              <MappingFragment StoreEntitySet="Rol_Operation">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="id_operation" ColumnName="id_operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ERPModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="ERPModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="question1" ColumnName="question" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEmployee">
+            <EntityTypeMapping TypeName="ERPModel.vEmployee">
+              <MappingFragment StoreEntitySet="vEmployee">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="module" ColumnName="module" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="pay" ColumnName="pay" />
+                <ScalarProperty Name="work_days" ColumnName="work_days" />
+                <ScalarProperty Name="work_hours" ColumnName="work_hours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEvaluation">
+            <EntityTypeMapping TypeName="ERPModel.vEvaluation">
+              <MappingFragment StoreEntitySet="vEvaluation">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vStaffTracking">
+            <EntityTypeMapping TypeName="ERPModel.vStaffTracking">
+              <MappingFragment StoreEntitySet="vStaffTracking">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="module" ColumnName="module" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="pay" ColumnName="pay" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="work_days" ColumnName="work_days" />
+                <ScalarProperty Name="work_hours" ColumnName="work_hours" />
+                <ScalarProperty Name="remaining_holidays" ColumnName="remaining_holidays" />
+                <ScalarProperty Name="paid_holidays" ColumnName="paid_holidays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EmployeeList" FunctionName="ERPModel.Store.EmployeeList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ERPModel.EmployeeList_Result">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="module" ColumnName="module" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="pay" ColumnName="pay" />
+                <ScalarProperty Name="work_days" ColumnName="work_days" />
+                <ScalarProperty Name="work_hours" ColumnName="work_hours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EvaluationList" FunctionName="ERPModel.Store.EvaluationList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ERPModel.EvaluationList_Result">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UserList" FunctionName="ERPModel.Store.UserList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ERPModel.UserList_Result">
+                <ScalarProperty Name="id_us" ColumnName="id_us" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AllEvaluationList" FunctionName="ERPModel.Store.AllEvaluationList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ERPModel.AllEvaluationList_Result">
+                <ScalarProperty Name="id_evaluation" ColumnName="id_evaluation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

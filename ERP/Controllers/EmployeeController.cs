@@ -1,6 +1,7 @@
 ﻿using ERP.Models;
 using ERP.Tools;
 using Microsoft.Ajax.Utilities;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -18,36 +19,44 @@ namespace ERP.Controllers
 {
     public class EmployeeController : Controller
     {
+        private static int page;
+        private static string search;
         public ActionResult NewEvaluation()
         {
+            Search.evaluation.id_evaluation = 0;
             Session["Section"] = "-1";
-            ViewBag.Message = Session["Username"] as string;
-            return View(new Evaluation());
+            return View(Search.evaluation);
         }
         public ActionResult Employee()
         {
-            ViewBag.Message = Session["Username"] as string;
-            List<vEmployee> list = new List<vEmployee>();
-            using (ERPEntities db = new ERPEntities())
-            {
-                list = (from d in db.vEmployee
-                        select d).ToList();
-            }
-            return View(list);
+            search = "";
+            page = 0;
+            return View(Search.Employees(search, page));
         }
 
         [HttpPost]
-        public ActionResult Employee(string Search)
+        public ActionResult Employee(string oSearch)
         {
-            ViewBag.Message = Session["Username"] as string;
-            List<vEmployee> list = new List<vEmployee>();
-            using (ERPEntities db = new ERPEntities())
-            {
-                list = (from d in db.vEmployee
-                        where d.fullname.Contains(Search) || d.module.Contains(Search) || d.position.Contains(Search)
-                        select d).ToList();
-            }
-            return View(list);
+            ViewBag.Volver = "Volver";
+            search = oSearch;
+            page = 0;
+            return View(Search.Employees(search, page));
+        }
+
+        public ActionResult Evaluations()
+        {
+            search = "";
+            page = 0;
+            return View(Search.Evaluations(search, page));
+        }
+
+        [HttpPost]
+        public ActionResult Evaluations(string oSearch)
+        {
+            ViewBag.Volver = "Volver";
+            search = oSearch;
+            page = 0;
+            return View(Search.Evaluations(search, page));
         }
 
         [HttpPost]
@@ -56,8 +65,9 @@ namespace ERP.Controllers
             Session["Anwsers"] = (Session["Anwsers"] as string) + Q1 + ',' + Q2 + ',' + Q3 + ',';
             int section = int.Parse(Session["Section"] as string) + 1;
             Session["Section"] = section.ToString();
-            if (section < 40) return View("NewEvaluation", new Evaluation() { id_evaluation = -1 });
-            else return View("NewEvaluation", new Evaluation() { id_evaluation = -2 });
+            if (section < 40) Search.evaluation.id_evaluation = -1; 
+            else Search.evaluation.id_evaluation = -2;
+            return View("NewEvaluation", Search.evaluation);
         }
 
 
@@ -76,7 +86,7 @@ namespace ERP.Controllers
                                 { 0, 0, 0, 0, 0 , 0}};
             int round = -1;
             int total = 0;
-            float promedio = 0f;
+            float promedio;
             for (int i = 0; i < answer.Length - 1; i++)
             {
                 if (i % 5 == 0) round++;
@@ -112,7 +122,8 @@ namespace ERP.Controllers
                     db.Evaluation.Add(oEvaluation);
                     db.SaveChanges();
                 }
-                ViewBag.Success = "Empleado  guardado  correctamente";
+                ViewBag.Success = "Evaluación  guardada  correctamente";
+                ViewBag.Report = "[Ver resultados]";
 
                 return View("NewEvaluation", new Evaluation());
             }
@@ -166,33 +177,13 @@ namespace ERP.Controllers
             Session["Evaluation"] = oEvaluation;
             Session["Anwsers"] = "";
 
-            return View(new Evaluation() { id_evaluation = -1 });
-        }
-
-        public ActionResult Evaluations()
-        {
-            ViewBag.Message = Session["Username"] as string;
-            return View(vEvaSearch(""));
-        }
-
-        [HttpPost]
-        public ActionResult Evaluations(string Search)
-        {
-            ViewBag.Message = Session["Username"] as string;
-            ViewBag.Volver = "Volver";
-            return View(vEvaSearch(Search));
+            Search.evaluation.id_evaluation = -1;
+            return View(Search.evaluation);
         }
 
         public ActionResult NewEmployee(int id)
         {
-            ViewBag.Message = Session["Username"] as string;
-            Evaluation oEvaluation = new Evaluation();
-            using (ERPEntities db = new ERPEntities())
-            {
-                oEvaluation = db.Evaluation.Find(id);
-            }
-
-            return View(oEvaluation);
+            return View(Search.GetEvaluation(id));
         }
 
         [HttpPost]
@@ -219,9 +210,7 @@ namespace ERP.Controllers
 
                     db.SaveChanges();
                 }
-                ViewBag.Success = "Evaluacion  guardada  correctamente";
-
-                return View("Evaluations", vEvaSearch(""));
+                ViewBag.Success = "Empleado guardado correctamente";
             }
             catch (DbEntityValidationException e)
             {
@@ -235,50 +224,55 @@ namespace ERP.Controllers
                             ve.PropertyName, ve.ErrorMessage);
                     }
                 }
-
-                return View("Evaluations", vEvaSearch(""));
             }
+            return RedirectToAction("Evaluations");
         }
-
         public ActionResult StaffTracking(int id)
         {
-            ViewBag.Message = Session["Username"] as string;
-            vStaffTracking employee = new vStaffTracking();
-            using (ERPEntities db = new ERPEntities()) 
-            {
-                employee = (from d in db.vStaffTracking
-                            where d.id_employee == id
-                            select d).FirstOrDefault();
-            }
-            if (employee == null) return View("Employee");
-            return View(employee);
+            if (Search.StaffTrackings(id) == null) return View("Employee");
+            return View(Search.employee);
         }
 
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult NextEvaluation()
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            next();
+            return View("Evaluations", Search.Evaluations(search, page));
+        }
+        public ActionResult PrevEvaluation()
+        {
+            prev();
+            return View("Evaluations", Search.Evaluations(search, page));
         }
 
-        private List<vEvaluation> vEvaSearch(string Search)
+        public ActionResult NextEmployee()
         {
-            List<vEvaluation> vEvaluationList = new List<vEvaluation>();
-            using (ERPEntities db = new ERPEntities())
+            next();
+            return View("Employee", Search.Employees(search, page));
+        }
+        public ActionResult PrevEmployee()
+        {
+            prev();
+            return View("Employee", Search.Employees(search, page));
+        }
+
+        private void next()
+        {
+            ViewBag.Volver = "Volver";
+            ViewBag.Prev = "Anterior";
+            page++;
+        }
+        private void prev()
+        {
+            if (page > 0)
             {
-                vEvaluationList = (from d in db.vEvaluation
-                                   where (d.name.Contains(Search) || d.lastname.Contains(Search)) && d.state == 0
-                                   select d).ToList();
+                page--;
+                if (page != 0)
+                {
+                    ViewBag.Volver = "Volver";
+                    ViewBag.Prev = "Anterior";
+                }
             }
-            return vEvaluationList;
+
         }
     }
 }

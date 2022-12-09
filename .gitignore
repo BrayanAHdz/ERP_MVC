@@ -376,3 +376,8 @@ FodyWeavers.xsd
 /ERP/Models/Module.cs
 /ERP/Models/Evaluation.cs
 /ERP/Models/Employee.cs
+/ERP/Web.config
+/ERP/Models/Model1.edmx.diagram
+/ERP/Models/Model1.edmx
+/ERP/Models/Model1.Designer.cs
+/ERP/Models/Model1.Context.cs

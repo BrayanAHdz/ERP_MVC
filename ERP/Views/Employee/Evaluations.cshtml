@@ -1,8 +1,13 @@
-﻿@model List<ERP.Models.vEvaluation>
+﻿@model List<ERP.Models.EvaluationList_Result>
 @{
     ViewBag.Title = "Evaluations";
     int resultado = 0;
     string[] resultados;
+    int count = 0;
+    if (Model.Count > 10)
+    {
+        ViewBag.Next = "Siguiente";
+    }
 }
 <br />
 <br />
@@ -24,7 +29,7 @@
                 <br />
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="text" id="Search" name="Search" class="form-control" placeholder="Nombre de usuario" required />
+                        <input type="text" id="oSearch" name="oSearch" class="form-control" placeholder="Buscar por nombre o apellido" required />
                     </div>
                     <div class="col-md-offset-2">
                         <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
@@ -43,21 +48,35 @@
                         <th scope="col">Evaluador</th>
                         <th scope="col">Contratar</th>
                     </tr>
-                    @foreach (var c in Model)
-                    {
-                        resultados = c.result.Split('-');
-                        resultado = int.Parse(resultados[0]);
-                        <tr>
-                            <th scope="row">@c.id_evaluation</th>
-                            <td>@c.lastname</td>
-                            <td>@c.name</td>
-                            <td>@resultado</td>
-                            <td>@c.notes</td>
-                            <td>@c.username</td>
-                            <td><button class="btn btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Employee/NewEmployee/"+c.id_evaluation)'"><i class="bi bi-person-fill-add"></i></button></td>
-                        </tr>
+                    @{
+                        foreach (var c in Model)
+                        {
+                            if (count < 10)
+                            {
+                                resultados = c.result.Split('-');
+                                resultado = int.Parse(resultados[0]);
+                                <tr>
+                                    <th scope="row">@c.id_evaluation</th>
+                                    <td>@c.lastname</td>
+                                    <td>@c.name</td>
+                                    <td>@resultado</td>
+                                    <td>@c.notes</td>
+                                    <td>@c.username</td>
+                                    <td><button class="btn btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Employee/NewEmployee/" + c.id_evaluation)'"><i class="bi bi-person-fill-add"></i></button></td>
+                                </tr>
+                                count++;
+                            }
+                        }
                     }
                 </table>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <a href="@Url.Content("~/Employee/PrevEvaluation")">@ViewBag.Prev</a>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="@Url.Content("~/Employee/NextEvaluation")">@ViewBag.Next</a>
+                </div>
             </div>
         </div>
     </div>

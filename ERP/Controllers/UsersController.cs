@@ -1,4 +1,5 @@
-﻿using ERP.Models;
+﻿using ERP.Filters;
+using ERP.Models;
 using ERP.Tools;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -7,39 +8,33 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ERP.Controllers
 {
     public class UsersController : Controller
     {
+        private static int page;
+        private static string search;
+
+        [AuthorizeUser(2)]
         public ActionResult Users()
         {
-            ViewBag.Message = Session["Username"] as string;
-            List<User> list = new List<User>();
-            using (ERPEntities db = new ERPEntities())
-            {
-                list = (from d in db.User
-                        where d.state == 0
-                        select d).ToList();
-            }
-            return View(list);
+            search= "";
+            page= 0;
+            return View(Search.Users(search, page));
         }
 
         [HttpPost]
-        public ActionResult Users(string Search)
+        public ActionResult Users(string oSearch)
         {
-            ViewBag.Message = Session["Username"] as string;
             ViewBag.Volver = "Volver";
-            List<User> list = new List<User>();
-            using (ERPEntities db = new ERPEntities())
-            {
-                list = (from d in db.User
-                        where d.username.Contains(Search) && d.state == 0
-                        select d).ToList();
-            }
-            return View(list);
+            search = oSearch;
+            page = 0;
+            return View(Search.Users(search, page));
         }
 
+        [AuthorizeUser(2)]
         public ActionResult EditUser(int id)
         {
             using (ERPEntities db = new ERPEntities())
@@ -100,9 +95,10 @@ namespace ERP.Controllers
 
             return Content("1");
         }
+
+        [AuthorizeUser(2)]
         public ActionResult Register()
         {
-            ViewBag.Message = Session["Username"] as string;
             return View();
         }
 
@@ -142,6 +138,30 @@ namespace ERP.Controllers
                 }
                 return View();
             }
+        }
+
+        [AuthorizeUser(2)]
+        public ActionResult NextUsers()
+        {
+            ViewBag.Volver = "Volver";
+            ViewBag.Prev = "Anterior";
+            page++;
+            return View("User", Search.Users(search, page));
+        }
+
+        [AuthorizeUser(2)]
+        public ActionResult PrevUsers()
+        {
+            if (page > 0)
+            {
+                page--;
+                if (page != 0)
+                {
+                    ViewBag.Volver = "Volver";
+                    ViewBag.Prev = "Anterior";
+                }
+            }
+            return View("User", Search.Users(search, page));
         }
     }
 }

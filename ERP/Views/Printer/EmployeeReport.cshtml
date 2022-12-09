@@ -1,0 +1,61 @@
+﻿@using ERP.Models
+@model vStaffTracking
+@{
+    Layout = null;
+    string[] results = Model.result.Split('-');
+}
+<link href="~/Content/bootstrap_flaty.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4">
+            <img src="~/Resources/logo_bio.jpg" height="40" />
+        </div>
+        <div class="col-xs-8 text-right">
+            <h2>Reporte de empleado</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <label>Fecha: @DateTime.Now.ToString("yyyy/MM/dd - HH:mm:ss")</label>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <h4>Datos del empleado</h4><br />
+    <div class="row">
+        <div class="col-xs-7">
+            <label>Nombre (s): @Model.name</label> <br />
+            <label>Apellido (s): @Model.lastname</label> <br />
+            <label>Edad: @Model.age</label> <br />
+            <label>Correo: @Model.email</label> <br />
+            <label>Teléfono: @Model.phone</label> <br />
+            <label>Dirección: @Model.address</label> <br />
+        </div>
+        <div class="col-xs-5 text-center">
+            <label> Adecuación al puesto</label><br />
+            <label> @results[0]</label>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <h4>Información laboral</h4> <br />
+    <div class="col-sm-8">
+        <label>
+            Área de trabajo: @Model.module <br /><br />
+            Puesto: @Model.position <br /><br />
+            Sueldo: $@Model.pay <br /><br />
+            Días de trabajo: @Model.work_days<br /><br />
+            Horas de trabajo: @Model.work_hours<br /><br />
+        </label>
+    </div>
+    <h4>Vacaciónes</h4> <br />
+    <div class="col-sm-4">
+        <label>
+            Días de descanso (pendientes): @Model.remaining_holidays<br /><br />
+            Días de descanso (pagados): @Model.paid_holidays<br /><br />
+        </label>
+    </div>
+</div>
+

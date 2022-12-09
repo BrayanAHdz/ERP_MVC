@@ -1,88 +1,98 @@
-﻿using System;
+﻿using ERP.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ERP.Filters;
 
 namespace ERP.Controllers
 {
     public class ReportsController : Controller
     {
-        // GET: Reports
+        private static int page;
+        private static string search;
+        
+        [AuthorizeUser(1)]
         public ActionResult Reports()
         {
             return View();
         }
-
-        // GET: Reports/Details/5
-        public ActionResult Details(int id)
+        [AuthorizeUser(1)]
+        public ActionResult Evaluations()
         {
-            return View();
+            search = "";
+            page = 0;
+            return View(Search.AllEvaluations(search, page));
         }
 
-        // GET: Reports/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Reports/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Evaluations(string oSearch)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            ViewBag.Volver = "Volver";
+            search = oSearch;
+            page = 0;
+            return View(Search.AllEvaluations(search, page));
         }
 
-        // GET: Reports/Edit/5
-        public ActionResult Edit(int id)
+        [AuthorizeUser(1)]
+        public ActionResult Employee()
         {
-            return View();
+            search = "";
+            page = 0;
+            return View(Search.Employees(search, page));
         }
 
-        // POST: Reports/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Employee(string oSearch)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            ViewBag.Volver = "Volver";
+            search = oSearch;
+            page = 0;
+            return View(Search.Employees(search, page));
+        }
+        [AuthorizeUser(1)]
+        public ActionResult NextEvaluation()
+        {
+            next();
+            return View("Evaluations", Search.AllEvaluations(search, page));
+        }
+        [AuthorizeUser(1)]
+        public ActionResult PrevEvaluation()
+        {
+            prev();
+            return View("Evaluations", Search.AllEvaluations(search, page));
         }
 
-        // GET: Reports/Delete/5
-        public ActionResult Delete(int id)
+        [AuthorizeUser(1)]
+        public ActionResult NextEmployee()
         {
-            return View();
+            next();
+            return View("Employee", Search.Employees(search, page));
+        }
+        [AuthorizeUser(1)]
+        public ActionResult PrevEmployee()
+        {
+            prev();
+            return View("Employee", Search.Employees(search, page));
         }
 
-        // POST: Reports/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        private void next()
         {
-            try
+            ViewBag.Volver = "Volver";
+            ViewBag.Prev = "Anterior";
+            page++;
+        }
+        private void prev()
+        {
+            if (page > 0)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                page--;
+                if (page != 0)
+                {
+                    ViewBag.Volver = "Volver";
+                    ViewBag.Prev = "Anterior";
+                }
             }
         }
     }

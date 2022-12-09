@@ -1,0 +1,100 @@
+﻿@model List<ERP.Models.AllEvaluationList_Result>
+@{
+    ViewBag.Title = "Evaluations";
+    int resultado = 0;
+    string[] resultados;
+    int count = 0;
+    if (Model.Count > 10)
+    {
+        ViewBag.Next = "Siguiente";
+    }
+}
+<br />
+<br />
+<div class="container">
+    <br />
+    <h2><strong>Reporte de evaluación</strong></h2>
+    <br />
+    <div class="row">
+        <div class="card">
+            <div id="msgError" class="msg-err">
+                @ViewBag.Error
+            </div>
+            <div id="msgSucc" class="msg-succ ">
+                @ViewBag.Success
+            </div>
+            <h4><strong>Seleccionar evaluación</strong></h4>
+            <a href="~/Reports/Evaluations">@ViewBag.Volver</a>
+            <form action="~/Reports/Evaluations" method="post" autocomplete="off" class="form-horizontal">
+                <br />
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="text" id="oSearch" name="oSearch" class="form-control" placeholder="Buscar por nombre o apellido" required />
+                    </div>
+                    <div class="col-md-offset-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <br />
+            <div class="container">
+                <table class="table">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Resultado general</th>
+                        <th scope="col">Notas</th>
+                        <th scope="col">Evaluador</th>
+                        <th scope="col">Generar reporte</th>
+                    </tr>
+                    @{
+                        foreach (var c in Model)
+                        {
+                            if (count < 10)
+                            {
+                                resultados = c.result.Split('-');
+                                resultado = int.Parse(resultados[0]);
+                                <tr>
+                                    <th scope="row">@c.id_evaluation</th>
+                                    <td>@c.lastname</td>
+                                    <td>@c.name</td>
+                                    <td>@resultado</td>
+                                    <td>@c.notes</td>
+                                    <td>@c.username</td>
+                                    <td><button class="btn btn-primary" type="button" onclick="document.location.href='@Url.Content("~/Printer/PrintEvaluationReport/" + c.id_evaluation)'"><i class="bi bi-file-earmark-plus-fill"></i></button></td>
+                                </tr>
+                                count++;
+                            }
+                        }
+                    }
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <a href="@Url.Content("~/Reports/PrevEvaluation")">@ViewBag.Prev</a>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="@Url.Content("~/Reports/NextEvaluation")">@ViewBag.Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    function deleteUser(id) {
+        url = "@Url.Content("~/Users/DeleteUser/")"+id;
+
+        $.post(url, function (data) {
+            if (data == "1") {
+                document.location.href = "@Url.Content("~/Users/Users")";
+                alert("Hola");
+            } else {
+                document.getElementById("msgError").innerHTML = "ERROR: No se puede eliminar el usuario actual.";
+            }
+        });
+    }
+</script>

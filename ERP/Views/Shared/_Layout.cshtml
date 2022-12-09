@@ -48,23 +48,26 @@
                         </li>
                     </a>
                     @{
-                        if (oUser.id_rol < 3)
-                        {
-                            <a href="~/Reports/Reports">
-                                <li class="item-menu">
-                                    <span class="glyphicon"><i class="bi bi-file-earmark-text-fill"></i></span>
-                                    <span class="menu">Reportes</span>
-                                </li>
-                            </a>
-
-                            if (oUser.id_rol == 1)
+                        if(oUser != null)
+                        { 
+                            if (oUser.id_rol < 3)
                             {
-                            <a href="~/Users/Users">
-                                <li class="item-menu">
-                                    <span class="glyphicon"><i class="bi bi-person-fill-gear"></i></span>
-                                    <span class="menu">Administrar usuarios</span>
-                                </li>
-                            </a>
+                                <a href="~/Reports/Reports">
+                                    <li class="item-menu">
+                                        <span class="glyphicon"><i class="bi bi-file-earmark-text-fill"></i></span>
+                                        <span class="menu">Reportes</span>
+                                    </li>
+                                </a>
+                                    
+                                if (oUser.id_rol == 1)
+                                {
+                                <a href="~/Users/Users">
+                                    <li class="item-menu">
+                                        <span class="glyphicon"><i class="bi bi-person-fill-gear"></i></span>
+                                        <span class="menu">Administrar usuarios</span>
+                                    </li>
+                                </a>
+                                }
                             }
                         }
                      }
@@ -89,7 +92,10 @@
                     <li><a runat="server" href="~/Contact"></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ">
-                    <li><a href="">Hola @ViewBag.Message</a></li>
+                    @if (oUser != null)
+                    { 
+                        <li><a href="">Hola @oUser.username</a></li>
+                    }
                     <li>@Html.ActionLink("Cerrar sesión", "ColseSession", "Access")</li>
                 </ul>
             </div>

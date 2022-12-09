@@ -17,7 +17,7 @@ namespace ERP.Filters
                 user = (User)HttpContext.Current.Session["User"];
                 if (user == null)
                 {
-                    if(filterContext.Controller is AccessController == false)
+                    if(filterContext.Controller is AccessController == false && filterContext.Controller is PrinterController == false)
                     {
                         filterContext.HttpContext.Response.Redirect("/Access/Login");
                     }
